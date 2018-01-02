@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,14 +27,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">home</a>
+      <a class="navbar-brand" href="<%=basePath%>home.jsp">home</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ><a href="#">blog <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">picture</a></li>
+        <li ><a href="<%=basePath%>blog.jsp">blog <span class="sr-only">(current)</span></a></li>
+        <li><a href="<%=basePath%>photo.jsp">picture</a></li>
         <li><a href="#">link</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
