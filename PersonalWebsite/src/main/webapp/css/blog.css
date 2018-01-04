@@ -9,3 +9,26 @@
 	border:1px solid #F5F5F5;
 	
 }
+
+#left-title{
+	height: 100px;
+	text-align:center;
+	overflow:auto;
+	
+}
+
+#noteEdit{
+	float: right;
+	font-size:24px;
+}
+
+.title{
+	height：150px;
+	border-bottom: 2px solid #F5F5F5;
+	overflow:auto;
+}
+
+.mynote{
+	font-family:"楷体";
+}
+/* scroll */

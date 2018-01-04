@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.dao.NoteDao">
+	
+	<resultMap type="com.java.entity.Note" id="noteResultMap">
+		<id property="noteId" column="NOTE_ID"/>
+		<result property="noteTitle" column="NOTE_TITLE"/>
+		<result property="noteContent" column="NOTE_CONTENT"/>
+		<result property="createTime" column="CREATE_TIME"/>
+		<!-- <association property="teacher" column="t_id" javaType="com.java.entity.Teacher">
+			<id property="id" column="id"/>
+			<result property="name" column="name"/>
+			<result property="age" column="age"/>
+		</association> -->
+	</resultMap>
+	<parameterMap type="com.java.entity.Note" id="nateParameterMap">
+		<parameter property="noteTitle" resultMap="noteResultMap"/>
+		<parameter property="noteContent" resultMap="noteResultMap"/>
+		<parameter property="createTime" resultMap="noteResultMap"/>
+	</parameterMap>
+	
+	<select id="getAllNotes" resultMap="noteResultMap">
+		select * from note
+	</select>
+	<insert id="addNotes" parameterMap="nateParameterMap">
+		insert into note set NOTE_TITLE=#{noteTitle},NOTE_CONTENT=#{noteContent},CREATE_TIME=#{createTime}
+	</insert>	
+	
+</mapper>

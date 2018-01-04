@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<hgroup>
 			<h2>相册</h2>
 		</hgroup>
-		<button class="btn btn-primary">上传照片</button>
+		<button class="btn btn-primary">新建</button>
 	</div>
 </div>
 
