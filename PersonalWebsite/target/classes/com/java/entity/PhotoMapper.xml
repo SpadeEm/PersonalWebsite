@@ -4,16 +4,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.java.dao.PhotoDao">
 	
-	<resultMap type="com.java.entity.Photo" id="classMap">
+	<resultMap type="com.java.entity.Photo" id="photoResultMap">
 		<id property="photoId" column="PHOTO_ID"/>
 		<result property="photoName" column="PHOTO_NAME"/>
 		<result property="photoPath" column="PHOTO_PATH"/>		
-		<!-- <association property="teacher" column="t_id" javaType="com.java.entity.Teacher">
-			<id property="id" column="id"/>
-			<result property="name" column="name"/>
-			<result property="age" column="age"/>
-		</association> -->
+		<association property="album" column="ALBUM_ID" javaType="com.java.entity.Album">
+			<id property="albumId" column="ALBUM_ID"/>
+			<result property="albumName" column="ALBUM_NAME"/>
+			<result property="createTime" column="CREATE_TIME"/>
+		</association>
 	</resultMap>
 	
-	
+	<insert id="addPhoto">
+		
+	</insert>	
 </mapper>

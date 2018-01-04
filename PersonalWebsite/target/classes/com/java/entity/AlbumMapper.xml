@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.dao.AlbumDao">
+	<resultMap type="com.java.entity.Album" id="albumResultMap">
+		<id property="albumId" column="ALBUM_ID"/>
+		<result property="albumName" column="ALBUM_NAME"/>
+		<result property="createTime" column="CREATE_TIME"/>	
+		<collection property="listPho" ofType="com.java.entity.Photo">
+			<id property="photoId" column="PHOTO_ID"/>
+			<result property="photoName" column="PHOTO_NAME"/>
+			<result property="photoPath" column="PHOTO_PATH"/>
+		</collection>	
+	</resultMap>
+	
+	<select id="getAllAlbums" resultMap="albumResultMap">
+		select * from album a,photo p
+	</select>
+	
+	<insert id="addAlbum">
+		insert into album set ALBUM_NAME=#{albumName},CREATE_TIME=#{createTime}	
+	</insert>
+</mapper>

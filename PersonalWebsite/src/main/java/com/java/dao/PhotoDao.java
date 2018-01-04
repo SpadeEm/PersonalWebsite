@@ -1,5 +1,11 @@
 package com.java.dao;
 
-public interface PhotoDao {
+import java.util.List;
 
+import com.java.entity.Photo;
+
+public interface PhotoDao {
+	public List<Photo> getAllPhoto();
+	
+	public void addPhoto();
 }

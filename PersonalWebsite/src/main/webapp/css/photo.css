@@ -2,3 +2,39 @@
 	background-image: url(../images/jum_bg.jpg);
 	
 }
+
+#add-album{
+	float:right;
+}
+
+#leftAlbum{
+	height: 100px;
+	/* text-align:center; */
+	overflow:auto;
+	font-size: 24px;
+	/* line-height: 100px; */
+}
+
+#albumEdit{
+	float: right;
+	font-size:24px;
+}
+
+#uploadPho{
+	float: right;
+	font-size: 16px;
+}
+
+.head-pic{
+	width: 78px;
+	height: 100%;
+}
+
+.show-albumName{
+	height:125px;
+	border-bottom: 2px solid #F5F5F5;
+	overflow:auto;
+}
+.show-pic{
+	overflow:auto;
+}

@@ -4,8 +4,14 @@ public class Photo {
 	private Integer photoId;
 	private String photoName;
 	private String photoPath;
+	private Album album;
 	
-	
+	public Album getAlbum() {
+		return album;
+	}
+	public void setAlbum(Album album) {
+		this.album = album;
+	}
 	public Integer getPhotoId() {
 		return photoId;
 	}
