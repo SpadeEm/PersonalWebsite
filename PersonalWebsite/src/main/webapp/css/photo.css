@@ -7,7 +7,7 @@
 	float:right;
 }
 
-#leftAlbum{
+.leftAlbum{
 	height: 100px;
 	/* text-align:center; */
 	overflow:auto;
@@ -20,7 +20,7 @@
 	font-size:24px;
 }
 
-#uploadPho{
+.uploadPho{
 	float: right;
 	font-size: 16px;
 }

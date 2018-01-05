@@ -12,4 +12,6 @@ public interface AlbumDao {
 	public List<Album> getAllAlbums();
 	//添加相册
 	public void addAlbum(@Param("albumName")String albumName,@Param("createTime")Date createTime);
+	//按照Id查相册信息
+	public Album getAlbumById(@Param("albumId")Integer albumId);
 }

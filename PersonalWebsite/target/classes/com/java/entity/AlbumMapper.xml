@@ -21,4 +21,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="addAlbum">
 		insert into album set ALBUM_NAME=#{albumName},CREATE_TIME=#{createTime}	
 	</insert>
+	
+	<select id="getAlbumById" parameterType="Integer" resultMap="albumResultMap">
+		select * from album a,photo p where  a.ALBUM_ID = #{albumId} and a.ALBUM_ID=p.ALBUM_ID
+	</select>
 </mapper>

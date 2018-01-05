@@ -16,8 +16,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href=../css/style.css>
 <link rel="stylesheet" type="text/css" href=../css/photo.css>
+<link rel="stylesheet" type="text/css" href=../bootstrap-fileinput/css/fileinput.min.css>
 <script type="text/javascript" src="../js/jquery-2.0.3.min.js"></script>
 <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../bootstrap-fileinput/js/fileinput.min.js"></script>
+<script type="text/javascript" src="../bootstrap-fileinput/js/locales/zh.js"></script>
 </head>
 <body>
 <!-- 导航栏 -->
@@ -65,7 +68,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			<div id="noteGroup" class="list-group">
 			  <c:forEach items="${PageInfo.list }" var="album">
-			  <a href="#${album.albumName}" role="tab" data-toggle="tab" class="list-group-item " id="leftAlbum">
+			  <%-- <div class="leftAlbumId" style="display: none">${album.albumId}</div> --%>
+			  <a href="${album.albumId}" role="tab" data-toggle="tab" class="list-group-item leftAlbum" >
 			  	<img alt="" src="../images/pho_null.jpg" class="head-pic">
 			  	${album.albumName}
 			  </a>
@@ -110,19 +114,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 		<!-- 相册内容显示 -->
 		<div class="col-md-8" border="1">
-			<div class="tab-content">
+			<%-- <div class="tab-content">
 			  <c:forEach items="${PageInfo.list }" var="album">  
-			  <div role="tabpanel" class="tab-pane" id="${album.albumName}">
+			  <div role="tabpanel" class="tab-pane" id="${album.albumId}">
 			  	<div class="show-albumName">
 			  		<h1>${album.albumName} <a href="##" class="glyphicon glyphicon-pencil" id="albumEdit"></a></h1> 
 			  		<p>创建于<fmt:formatDate value="${album.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
-			  		<a href="##" class="glyphicon glyphicon-arrow-up" id="uploadPho">上传照片</a>
-			  	</div>
-			  	<c:forEach items="${album.listPho }" var="photo"> 
-			  	<div class="show-pic"></div>
-			  	</c:forEach>
+			  		<div class="getAlbumId" style="display: none">${album.albumId}</div>
+			  		<a href="${album.albumId}" class="glyphicon glyphicon-arrow-up uploadPho" data-toggle="modal"  data-target="#uploadModal">上传照片</a>
+			  	</div>			  	
+			  	<div class="show-pic">
+			  		<c:forEach items="${album.listPho }" var="photo"> 
+			  		<div class="col-md-2">
+			  			<img alt="图" src="$photo.photoPath}">
+			  		</div>
+			  		</c:forEach>
+			  	</div> 	
 			  </div> 
 			  </c:forEach>
+			 </div> --%>
+			 <div>
+			  <div id="albumContent">
+			  	<div class="show-albumName">
+			  		<h1 id="albumHead"> <a href="##" class="glyphicon glyphicon-pencil" id="albumEdit"></a></h1> 
+			  		<p id="creatTime"></p>
+			  		<div class="getAlbumId" style="display: none">${album.albumId}</div>
+			  		<a href="" class="glyphicon glyphicon-arrow-up" data-toggle="modal"  data-target="#uploadModal" id="uploadPho">上传照片</a>
+			  	</div>
+			  	<div class="showpic"></div>
+			  </div>
 			</div>
 		</div>
 	</div>
@@ -134,7 +154,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="noteTitle">新增相册</h4>
+        <h4 class="modal-title">新增相册</h4>
       </div>
       <div class="modal-body">
        	<div class="input-group">
@@ -150,9 +170,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
 </div>
 
+<!-- 上传照片弹框 -->
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">上传照片</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="file-loading"> 
+    		<input id="file" name="file" type="file" multiple>
+		</div>
+        <div id="kartik-file-errors"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
 $(function(){
-	/* $("[data-toggle='tooltip']").tooltip(); */
+	$("#albumContent").hide();
+	//初始化tooltips插件
 	$('[data-toggle="tooltip"]').tooltip('show');
 	$("#albumSave").click(function(){
 		if ($("#albumName").val().length=0||!$("#albumName").val().trim()) {
@@ -160,7 +201,7 @@ $(function(){
 			return;
 		}
 		$.ajax({
-			url:'../photo//addAlbum.do',
+			url:'../photo/addAlbum.do',
 			data:{albumName:$("#albumName").val()},
 			type:'post',
 			dataType:'json',
@@ -176,7 +217,71 @@ $(function(){
 		});
 	});
 	
-});
+	$(".leftAlbum").click(function() {
+		$("#albumContent").show();
+	     var aId = $(this).attr("href");
+	     $.ajax({
+	    	 url:'../photo/getAlbumById.do',
+	    	 type:'post',
+	    	 data:{id:aId},
+	    	 dataType:'json',
+	    	 success:function(data){
+	    		$("#albumHead").html(data.result.albumName);
+	    		$("#creatTime").html("创建于"+data.createTime);
+	    		$("#uploadPho").attr("href",data.result.albumId);
+	    		$(".showpic").html("<img src="+data.result.listPho[0].photoPath+">")
+	    	 }
+	     });
+	     
+	   });
+	
+	$(".leftAlbum").click(function(){
+		/* var a = $(".getAlbumId").val();
+		alert(a); */
+		var ablumId = $(this).attr("href");
+		//初始化上传组件 
+		$("#file").fileinput({
+			language: 'zh', //设置语言
+	        uploadUrl: "../photo/fileUploads.do", //上传的地址
+	        showUpload: true,
+	        uploadAsync:false,//是否为异步上传
+	        maxFileCount: 10,
+	        mainClass: "input-group-lg",
+	       	allowedFileExtensions: ["jpg", "png", "gif"],
+			msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+			removeFromPreviewOnError:true, //是否移除校验文件失败的文件  
+			uploadExtraData:function (previewId, index) {
+				return {
+					'id': ablumId
+					};
+			}
+	    }).on("filebatchuploadsuccess",function(event, data) {
+	    	if(data.response.result==true)
+	        {
+	    		/* $('#file').fileinput('clear');  */ 
+	    		alert('成功');
+	        }else{
+	        	alert('失败');
+	        }
+	    })
+	     /* .on("fileuploaded", function(event, data) { //异步上传成功
+	        if(data.response.result==true)
+	        {
+	        	$('#file').fileinput('clear');  
+	        }else{
+	        	alert('处理失败');
+	        }
+	    })
+		 */
+	}); 
+	  
+    
+	 /* $('#file').fileinput('clear');//重置上传组件  */
+	 
+	
+})
+
+
 </script>
 
 </body>
