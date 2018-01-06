@@ -1,6 +1,6 @@
 #jum{
-	background-image: url(../images/jum_bg.jpg);
-	
+	width:100%;
+	background-image: url(../images/jum_bg.jpg);	
 }
 
 #add-album{
@@ -35,6 +35,25 @@
 	border-bottom: 2px solid #F5F5F5;
 	overflow:auto;
 }
+
 .show-pic{
 	overflow:auto;
 }
+
+/* .img-thumbnail{
+	display:inline-block;
+	max-width:100%;
+	height:auto;
+	padding:4px;
+	line-height:1.42857143;
+    background-color:#FFF;
+    border:1px solid #DDD;border-radius:4px;
+    transition:all 0.2s ease-in-out;
+	
+} */
+
+/* .img-responsive{
+	display:block;
+	max-width:100%;
+	height:auto;
+} */

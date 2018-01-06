@@ -48,12 +48,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div><!-- /.container-fluid -->
 </nav>
 
-<div id="jum" class="jumbotron">
-	<div class="container">
+<div class="container jumbotron" id="jum">
+	<div class ="row">
 		<hgroup>
-			<h2>相册</h2>
-		</hgroup>
-		<button class="btn btn-primary">新建</button>
+		<h2>相册</h2>
+	</hgroup>
 	</div>
 </div>
 
@@ -141,7 +140,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  		<div class="getAlbumId" style="display: none">${album.albumId}</div>
 			  		<a href="" class="glyphicon glyphicon-arrow-up" data-toggle="modal"  data-target="#uploadModal" id="uploadPho">上传照片</a>
 			  	</div>
-			  	<div class="showpic"></div>
+			  	<div style="padding: 20px;">
+				  	<div class="showpic container">
+				  		<img alt="" src="">
+				  	</div>
+				</div>
 			  </div>
 			</div>
 		</div>
@@ -216,9 +219,10 @@ $(function(){
 			}	
 		});
 	});
-	
+	//相册信息显示功能
 	$(".leftAlbum").click(function() {
 		$("#albumContent").show();
+		$('.showpic img').remove();
 	     var aId = $(this).attr("href");
 	     $.ajax({
 	    	 url:'../photo/getAlbumById.do',
@@ -229,12 +233,16 @@ $(function(){
 	    		$("#albumHead").html(data.result.albumName);
 	    		$("#creatTime").html("创建于"+data.createTime);
 	    		$("#uploadPho").attr("href",data.result.albumId);
-	    		$(".showpic").html("<img src="+data.result.listPho[0].photoPath+">")
+	    		//遍历显示照片
+	    		for (var i = 0; i < data.result.listPho.length; i++) {
+	    			$(".showpic").append("<img src="+data.result.listPho[i].photoPath+">");
+				}
+	    		$('.showpic img').addClass("img-responsive img-thumbnail");
 	    	 }
 	     });
 	     
 	   });
-	
+	//照片上传功能
 	$(".leftAlbum").click(function(){
 		/* var a = $(".getAlbumId").val();
 		alert(a); */
@@ -258,8 +266,8 @@ $(function(){
 	    }).on("filebatchuploadsuccess",function(event, data) {
 	    	if(data.response.result==true)
 	        {
-	    		/* $('#file').fileinput('clear');  */ 
 	    		alert('成功');
+	    		$('#file').fileinput('clear'); 
 	        }else{
 	        	alert('失败');
 	        }
