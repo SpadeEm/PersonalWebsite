@@ -40,7 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ><a href="<%=basePath%>/note/getAllNotes.do">blog <span class="sr-only">(current)</span></a></li>
+        <li ><a href="../note/getAllNotes.do">blog <span class="sr-only">(current)</span></a></li>
         <li><a href="../photo/getAllAlbums.do">picture</a></li>
         <li><a href="#">link</a></li>
       </ul>
@@ -137,7 +137,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  	<div class="show-albumName">
 			  		<h1 id="albumHead"> <a href="##" class="glyphicon glyphicon-pencil" id="albumEdit"></a></h1> 
 			  		<p id="creatTime"></p>
-			  		<div class="getAlbumId" style="display: none">${album.albumId}</div>
+			  		<%-- <div class="getAlbumId" style="display: none">${album.albumId}</div> --%>
 			  		<a href="" class="glyphicon glyphicon-arrow-up" data-toggle="modal"  data-target="#uploadModal" id="uploadPho">上传照片</a>
 			  	</div>
 			  	<div style="padding: 20px;">
@@ -197,7 +197,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 $(function(){
 	$("#albumContent").hide();
 	//初始化tooltips插件
-	$('[data-toggle="tooltip"]').tooltip('show');
+	$('[data-toggle="tooltip"]').tooltip();
 	$("#albumSave").click(function(){
 		if ($("#albumName").val().length=0||!$("#albumName").val().trim()) {
 			alert("相册名不能为空");

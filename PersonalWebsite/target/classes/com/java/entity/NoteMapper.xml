@@ -24,8 +24,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getAllNotes" resultMap="noteResultMap">
 		select * from note
 	</select>
+	
 	<insert id="addNotes" parameterMap="nateParameterMap">
 		insert into note set NOTE_TITLE=#{noteTitle},NOTE_CONTENT=#{noteContent},CREATE_TIME=#{createTime}
 	</insert>	
 	
+	<update id="updateNoteById" parameterMap="nateParameterMap">
+		update note n set n.NOTE_TITLE=#{noteTitle},n.NOTE_CONTENT=#{noteContent} where n.NOTE_ID=#{noteId}
+	</update>
+	
+	<select id="getNoteById" parameterType="int" resultMap="noteResultMap">
+		select * from note n where n.NOTE_ID=#{noteId}
+	</select>
 </mapper>

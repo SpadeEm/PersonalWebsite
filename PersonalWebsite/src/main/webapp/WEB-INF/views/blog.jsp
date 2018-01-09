@@ -37,7 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ><a href="<%=basePath%>/note/getAllNotes.do">blog <span class="sr-only">(current)</span></a></li>
+        <li ><a href="../note/getAllNotes.do">blog <span class="sr-only">(current)</span></a></li>
         <li><a href="../photo/getAllAlbums.do">picture</a></li>
         <li><a href="#">link</a></li>
       </ul>
@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			<div id="noteGroup" class="list-group">
 			  <c:forEach items="${PageInfo.list }" var="notes">
-			  <a href="#${notes.noteTitle}" role="tab" data-toggle="tab" class="list-group-item " id="left-title"><h3>${notes.noteTitle}</h3></a>
+			  <a href="${notes.noteId}" role="tab" data-toggle="tab" class="list-group-item leftTitle" id="left-title"><h3>${notes.noteTitle}</h3></a>
 			  </c:forEach>
 			</div>
 			<div>
@@ -95,18 +95,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 		<!-- 内容显示 -->
 		<div class="col-md-8" border="1">
-			<div class="tab-content">
+			<%-- <div class="tab-content">
 			  <c:forEach items="${PageInfo.list }" var="notes">  
 			  <div role="tabpanel" class="tab-pane" id="${notes.noteTitle}">
 			  	<div class="title">
-			  		<h1>${notes.noteTitle} <a href="##" class="glyphicon glyphicon-pencil" id="noteEdit"></a></h1> 
+			  		<h1>
+			  			${notes.noteTitle} 
+			  			<a href="${notes.noteId}" class="glyphicon glyphicon-pencil noteEdit" data-toggle="tooltip" data-placement="left" title="修改笔记" id="noteEdit"></a>
+			  		</h1> 
+			  		<div class="noteId" style="display: none">${notes.noteId}</div>
 			  		<p>创建于<fmt:formatDate value="${notes.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
 			  	</div>		 
 			  	<div>${notes.noteContent}</div>
 			  </div> 
 			  </c:forEach>
+			</div> --%>
+			<div>
+			  <div id="showNote">
+			  	<div class="title">
+			  		<h1 id="noteHead"> <a href="##" class="glyphicon glyphicon-pencil" id="noteEdit"></a></h1> 
+			  		<p id="creatTime"></p>
+			  		<div class="noteId" id="noteId" style="display: none"></div>
+			  		<a href="" class="glyphicon glyphicon-pencil" data-toggle="modal"  data-target="#uploadModal" id="editNote">修改</a>
+			  		<a href="" class="glyphicon glyphicon-trash" data-toggle="modal"  data-target="#uploadModal" id="deleteNote">删除</a>
+			  	</div>
+			  	<div style="padding: 20px;">
+				  	<div id="showNoteContent" class="showNoteContent"></div>
+				</div>
+			  </div>
 			</div>
-		
+			
 		</div>
 	</div>
 </div>
@@ -124,13 +142,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  <span class="input-group-addon">题目</span>
 		  <input type="text" class="form-control" placeholder="Title" id="title">
 		</div>
-		<form>
-            <textarea name=noteContent id="noteContent" rows="10" cols="80">
+		<form id="textContent">
+            <textarea name="noteContent" id="noteContent" rows="10" cols="80">
             </textarea>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="nateClose">关闭</button>
         <button type="button" class="btn btn-primary"  id="noteSave">保存</button>
       </div>
     </div>
@@ -138,17 +156,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 
 <script>
-    // Replace the <textarea id="editor1"> with a CKEditor
-    // instance, using default configuration.
-    CKEDITOR.replace( 'noteContent' );
     $(function(){
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        //初始化CKeditor
+        CKEDITOR.replace( 'noteContent' );
+    	//初始化tooltip
+    	$('[data-toggle="tooltip"]').tooltip();
+    	//清空modal中的内容
+    	$("#showNote").hide();
+    	$("#addNote").click(function(){
+    		$("#title").val("");
+    		CKEDITOR.instances.noteContent.setData('');
+    	});
+    	//添加笔记
     	$("#noteSave").click(function(){
     		if($("#title").val().length=0||!$("#title").val().trim()){
     			alert("题目不能为空");
     			return;
     		}
     		$.ajax({
-    			url:'<%=basePath%>/note/addNotes.do',
+    			url:'../note/addNotes.do',
     			data:{
     				noteTitle:$("#title").val(),
     				noteContent:CKEDITOR.instances.noteContent.getData()
@@ -166,6 +194,62 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			}
     		}); 
     	});
+    	//通过noteId查看笔记
+    	$(".leftTitle").click(function(){
+    		//清空modal中的内容
+    		//$("#title").val("");
+    		//CKEDITOR.instances.noteContent.setData('');
+    		$("#showNote").show();
+    		var a =$(this).attr("href");
+    		$.ajax({
+    			url:'../note/getNoteById.do',
+    			data:{noteId:a},
+    			dataType:'json',
+    			type:'post',
+    			success:function(data){
+    				$("#noteHead").html(data.result.noteTitle);
+    				$("#creatTime").html("创建于"+data.createTime);
+    				$("#showNoteContent").html(data.result.noteContent);
+    				$("#noteId").html(data.result.noteId);
+    			}
+    		});
+    		//打开编辑界面
+        	$("#editNote").click(function(){
+        		//清空modal中的内容
+        		$("#title").val("");
+        		CKEDITOR.instances.noteContent.setData('');
+        		$("#myModal").modal("show");
+        		$.ajax({
+        			url:'../note/getNoteById.do',
+        			data:{noteId:a},
+        			dataType:'json',
+        			type:'post',
+        			success:function(data){
+        				$("#title").val(data.result.noteTitle);
+        	    		CKEDITOR.instances.noteContent.setData(data.result.noteContent);
+        			}
+        		});
+        	});
+    	});
+    	//打开编辑界面
+    	/* $("#editNote").click(function(){
+    		//清空modal中的内容
+    		$("#title").val("");
+    		CKEDITOR.instances.noteContent.setData('');
+    		$("#myModal").modal("show");
+    		var b = $("#noteId").val();
+    		$.ajax({
+    			url:'../note/getNoteById.do',
+    			data:{noteId:b},
+    			dataType:'json',
+    			type:'post',
+    			success:function(data){
+    				$("#title").val(data.result.noteTitle);
+    	    		CKEDITOR.instances.noteContent.setData(data.result.noteContent);
+    			}
+    		});
+    	}); */
+    	
     }); 
 </script>
 </body>

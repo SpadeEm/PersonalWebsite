@@ -31,4 +31,13 @@
 .mynote{
 	font-family:"楷体";
 }
-/* scroll */
+
+.title{
+	height:125px;
+	border-bottom: 2px solid #F5F5F5;
+	overflow:auto;
+}
+
+.showNoteContent{
+	overflow:auto;
+}
