@@ -17,7 +17,7 @@
 
 #albumEdit{
 	float: right;
-	font-size:24px;
+	font-size:16px;
 }
 
 .uploadPho{
@@ -37,6 +37,7 @@
 }
 
 .show-pic{
+	max-height:100%
 	overflow:auto;
 }
 

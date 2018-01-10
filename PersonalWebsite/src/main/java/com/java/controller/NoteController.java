@@ -1,6 +1,5 @@
 package com.java.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -50,23 +49,29 @@ public class NoteController {
 	//修改笔记
 	@RequestMapping(value="/editNoteById",method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> editNoteById(){
+	public Map<String,Object> editNoteById(@RequestParam("noteId")Integer noteId,@RequestParam("noteTitle")String noteTitle,
+			@RequestParam("noteContent")String noteContent){
 		Map<String,Object> map = new HashMap<String,Object>();
+		noteDao.updateNoteById(noteId, noteTitle, noteContent);
+		map.put("result", true);
 		return map;
 	}
 	//通过noteId查看笔记
-	@RequestMapping(value="/getNoteById",method=RequestMethod.POST)
+	@RequestMapping(value="/getNoteById",method={RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
-	public Map<String,Object> getNoteById(@RequestParam("noteId")Integer noteId){
+	public Map<String,Object> getNoteById(@RequestParam("noteId")String noteId,Model model){
 		Map<String,Object> map = new HashMap<String,Object>();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Note note = noteDao.getNoteById(noteId);
-		if (note.getCreateTime() == null) {
-			map.put("createTime", " ");
-		}else{
-			map.put("createTime", formatter.format(note.getCreateTime()));
-		}
+		String strId = noteId.substring(1);
+		Integer id = Integer.parseInt(strId);
+		Note note = noteDao.getNoteById(id);
 		map.put("result", note);
 		return map;
+	}
+	
+	@RequestMapping(value="/deleteNoteById",method={RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody
+	public String deleteNoteById(@RequestParam("noteId")Integer noteId){
+		noteDao.deleteNoteById(noteId);
+		return null;
 	}
 }

@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			<div id="noteGroup" class="list-group">
 			  <c:forEach items="${PageInfo.list }" var="notes">
-			  <a href="${notes.noteId}" role="tab" data-toggle="tab" class="list-group-item leftTitle" id="left-title"><h3>${notes.noteTitle}</h3></a>
+			  <a href="#${notes.noteId}" role="tab" data-toggle="tab" class="list-group-item leftTitle" id="left-title"><h3>${notes.noteTitle}</h3></a>
 			  </c:forEach>
 			</div>
 			<div>
@@ -95,22 +95,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 		<!-- 内容显示 -->
 		<div class="col-md-8" border="1">
-			<%-- <div class="tab-content">
+			<div class="tab-content">
 			  <c:forEach items="${PageInfo.list }" var="notes">  
-			  <div role="tabpanel" class="tab-pane" id="${notes.noteTitle}">
+			  <div role="tabpanel" class="tab-pane" id="${notes.noteId}">
 			  	<div class="title">
 			  		<h1>
 			  			${notes.noteTitle} 
-			  			<a href="${notes.noteId}" class="glyphicon glyphicon-pencil noteEdit" data-toggle="tooltip" data-placement="left" title="修改笔记" id="noteEdit"></a>
 			  		</h1> 
-			  		<div class="noteId" style="display: none">${notes.noteId}</div>
+			  		<a href="##" class="glyphicon glyphicon-pencil editNote" data-toggle="modal"  data-target="#editModal" >修改</a>
+			  		<a href=""  class="glyphicon glyphicon-trash" data-toggle="modal"  data-target="#uploadModal" id="deleteNote">删除</a>
 			  		<p>创建于<fmt:formatDate value="${notes.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
+			  		<div class="noteId" style="display: none">${notes.noteId}</div>
 			  	</div>		 
 			  	<div>${notes.noteContent}</div>
 			  </div> 
 			  </c:forEach>
-			</div> --%>
-			<div>
+			</div> 
+			<!-- <div>
 			  <div id="showNote">
 			  	<div class="title">
 			  		<h1 id="noteHead"> <a href="##" class="glyphicon glyphicon-pencil" id="noteEdit"></a></h1> 
@@ -123,13 +124,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  	<div id="showNoteContent" class="showNoteContent"></div>
 				</div>
 			  </div>
-			</div>
+			</div> -->
 			
 		</div>
 	</div>
 </div>
 
 <!-- 新增笔记弹框 -->
+<div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -140,7 +142,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="modal-body">
        	<div class="input-group">
 		  <span class="input-group-addon">题目</span>
-		  <input type="text" class="form-control" placeholder="Title" id="title">
+		  <input type="text" class="form-control" placeholder="Title" id="title" >
 		</div>
 		<form id="textContent">
             <textarea name="noteContent" id="noteContent" rows="10" cols="80">
@@ -154,83 +156,120 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
   </div>
 </div>
-
+</div>
+<!-- 编辑笔记弹框 -->
+<div>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="noteTitle">修改笔记</h4>
+      </div>
+      <div class="modal-body">
+      	
+       	<div class="input-group">
+		  <span class="input-group-addon">题目</span>
+		  <input type="text" class="form-control" placeholder="" id="showTitle" >
+		</div>
+		<form>
+            <textarea name="showNoteContent" id="showNoteContent" rows="10" cols="80">
+            </textarea>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
+        <button type="button" class="btn btn-primary"  id="noteUpdate">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 <script>
     $(function(){
         // Replace the <textarea id="editor1"> with a CKEditor
         // instance, using default configuration.
         //初始化CKeditor
         CKEDITOR.replace( 'noteContent' );
+        CKEDITOR.replace( 'showNoteContent' );
     	//初始化tooltip
     	$('[data-toggle="tooltip"]').tooltip();
     	//清空modal中的内容
-    	$("#showNote").hide();
+    	var a;
     	$("#addNote").click(function(){
     		$("#title").val("");
     		CKEDITOR.instances.noteContent.setData('');
+    		//添加笔记
+        	$("#noteSave").click(function(){
+        		if($("#title").val().length=0||!$("#title").val().trim()){
+        			alert("题目不能为空");
+        			return;
+        		}
+        		$.ajax({
+        			url:'../note/addNotes.do',
+        			data:{
+        				noteTitle:$("#title").val(),
+        				noteContent:CKEDITOR.instances.noteContent.getData()
+        			},
+        			dataType:'json',
+        			type:'post',
+        			success:function(data){
+        				if(data.result==true){
+        					$("#myModal").modal("hide");
+        					alert("保存成功");
+        					window.location.reload();
+        				}else{
+        					alert("保存失败");
+        				}
+        			}
+        		}); 
+        	});
     	});
-    	//添加笔记
-    	$("#noteSave").click(function(){
-    		if($("#title").val().length=0||!$("#title").val().trim()){
-    			alert("题目不能为空");
-    			return;
-    		}
-    		$.ajax({
-    			url:'../note/addNotes.do',
+    	
+    	//给edit界面的noteId传值
+    	$(".leftTitle").unbind('click').click(function(){
+    		//清空modal中的内容
+    		//$("#title").val("");
+    		//CKEDITOR.instances.noteContent.setData('');
+    		a =$(this).attr("href");
+    		//打开编辑界
+    		
+   		});
+    	//编辑界面显示
+    	$(".editNote").click(function(){
+	   		$.ajax({
+	   			url:'../note/getNoteById.do',
+	   			data:{noteId:a},
+	   			dataType:'json',
+	   			type:'post',
+	   			success:function(data){
+	   				$("#showTitle").val(data.result.noteTitle);
+	   				$("#noteId").html(data.result.noteId);
+	   				CKEDITOR.instances.showNoteContent.setData(data.result.noteContent);
+	   			}
+	   		});
+	   		
+		});
+    	$("#noteUpdate").click(function(){
+			$.ajax({
+    			url:'../note/editNoteById.do',
     			data:{
-    				noteTitle:$("#title").val(),
-    				noteContent:CKEDITOR.instances.noteContent.getData()
-    			},
+    				noteId:a,
+    				noteTitle:$("#showTitle").val(),
+    				noteContent:CKEDITOR.instances.showNoteContent.getData()
+    				},
     			dataType:'json',
     			type:'post',
     			success:function(data){
     				if(data.result==true){
     					$("#myModal").modal("hide");
-    					alert("保存成功");
     					window.location.reload();
     				}else{
     					alert("保存失败");
     				}
     			}
-    		}); 
-    	});
-    	//通过noteId查看笔记
-    	$(".leftTitle").click(function(){
-    		//清空modal中的内容
-    		//$("#title").val("");
-    		//CKEDITOR.instances.noteContent.setData('');
-    		$("#showNote").show();
-    		var a =$(this).attr("href");
-    		$.ajax({
-    			url:'../note/getNoteById.do',
-    			data:{noteId:a},
-    			dataType:'json',
-    			type:'post',
-    			success:function(data){
-    				$("#noteHead").html(data.result.noteTitle);
-    				$("#creatTime").html("创建于"+data.createTime);
-    				$("#showNoteContent").html(data.result.noteContent);
-    				$("#noteId").html(data.result.noteId);
-    			}
     		});
-    		//打开编辑界面
-        	$("#editNote").click(function(){
-        		//清空modal中的内容
-        		$("#title").val("");
-        		CKEDITOR.instances.noteContent.setData('');
-        		$("#myModal").modal("show");
-        		$.ajax({
-        			url:'../note/getNoteById.do',
-        			data:{noteId:a},
-        			dataType:'json',
-        			type:'post',
-        			success:function(data){
-        				$("#title").val(data.result.noteTitle);
-        	    		CKEDITOR.instances.noteContent.setData(data.result.noteContent);
-        			}
-        		});
-        	});
-    	});
+		});
     	//打开编辑界面
     	/* $("#editNote").click(function(){
     		//清空modal中的内容

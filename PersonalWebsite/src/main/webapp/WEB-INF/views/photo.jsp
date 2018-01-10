@@ -135,10 +135,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 <div>
 			  <div id="albumContent">
 			  	<div class="show-albumName">
-			  		<h1 id="albumHead"> <a href="##" class="glyphicon glyphicon-pencil" id="albumEdit"></a></h1> 
+			  		<h1 id="albumHead"> </h1> 
 			  		<p id="creatTime"></p>
 			  		<%-- <div class="getAlbumId" style="display: none">${album.albumId}</div> --%>
 			  		<a href="" class="glyphicon glyphicon-arrow-up" data-toggle="modal"  data-target="#uploadModal" id="uploadPho">上传照片</a>
+					<a href="##" class="glyphicon glyphicon-pencil" id="albumEdit"></a>
 			  	</div>
 			  	<div style="padding: 20px;">
 				  	<div class="showpic container">
@@ -196,6 +197,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 $(function(){
 	$("#albumContent").hide();
+	var aId;
 	//初始化tooltips插件
 	$('[data-toggle="tooltip"]').tooltip();
 	$("#albumSave").click(function(){
@@ -220,10 +222,10 @@ $(function(){
 		});
 	});
 	//相册信息显示功能
-	$(".leftAlbum").click(function() {
+	$(".leftAlbum").unbind('click').click(function(){
+		aId = $(this).attr("href");
 		$("#albumContent").show();
 		$('.showpic img').remove();
-	     var aId = $(this).attr("href");
 	     $.ajax({
 	    	 url:'../photo/getAlbumById.do',
 	    	 type:'post',
@@ -242,17 +244,49 @@ $(function(){
 	     });
 	     
 	   });
+	//上传照片
+	$("#file").fileinput({
+		language: 'zh', //设置语言
+        uploadUrl: "../photo/fileUploads.do", //上传的地址
+        showUpload: true,
+        uploadAsync:true,//是否为异步上传
+        maxFileCount: 10,
+        mainClass: "input-group-lg",
+       	allowedFileExtensions: ["jpg", "png", "gif"],
+		msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+		removeFromPreviewOnError:true, //是否移除校验文件失败的文件  
+		uploadExtraData:function (previewId, index) {
+			return {
+				'id': aId
+				};
+		}
+    })/* .on("filebatchuploadsuccess",function(event, data) {
+    	if(data.response.result==true)
+        {
+    		alert('成功');
+    		$('#file').fileinput('clear'); 
+        }else{
+        	alert('失败');
+        }
+    }) */
+     .on("fileuploaded", function(event, data) { //异步上传成功
+        if(data.response.result==true)
+        {
+        	alert('成功');
+        	$('#file').fileinput('clear');  
+        }else{
+        	alert('处理失败');
+        }
+    })
 	//照片上传功能
-	$(".leftAlbum").click(function(){
-		/* var a = $(".getAlbumId").val();
-		alert(a); */
+	/* $(".leftAlbum").click(function(){
 		var ablumId = $(this).attr("href");
 		//初始化上传组件 
 		$("#file").fileinput({
 			language: 'zh', //设置语言
 	        uploadUrl: "../photo/fileUploads.do", //上传的地址
 	        showUpload: true,
-	        uploadAsync:false,//是否为异步上传
+	        uploadAsync:true,//是否为异步上传
 	        maxFileCount: 10,
 	        mainClass: "input-group-lg",
 	       	allowedFileExtensions: ["jpg", "png", "gif"],
@@ -271,17 +305,18 @@ $(function(){
 	        }else{
 	        	alert('失败');
 	        }
-	    })
-	     /* .on("fileuploaded", function(event, data) { //异步上传成功
+	    }) 
+	     .on("fileuploaded", function(event, data) { //异步上传成功
 	        if(data.response.result==true)
 	        {
+	        	alert('成功');
 	        	$('#file').fileinput('clear');  
 	        }else{
 	        	alert('处理失败');
 	        }
 	    })
-		 */
-	}); 
+		 
+	});  */
 	  
     
 	 /* $('#file').fileinput('clear');//重置上传组件  */

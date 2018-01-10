@@ -36,4 +36,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getNoteById" parameterType="int" resultMap="noteResultMap">
 		select * from note n where n.NOTE_ID=#{noteId}
 	</select>
+	
+	<delete id="deleteNoteById">
+		delete from note n where n.NOTE_ID=#{noteId}
+	</delete>
 </mapper>
