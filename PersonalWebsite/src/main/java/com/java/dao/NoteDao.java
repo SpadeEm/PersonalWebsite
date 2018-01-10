@@ -16,6 +16,6 @@ public interface NoteDao {
 	public void updateNoteById(@Param("noteId")Integer noteId,@Param("noteTitle")String noteTitle,@Param("noteContent")String noteContent);
 	//通过noteId查询笔记
 	public Note getNoteById(@Param("noteId")Integer noteId);
-	
+	//通过noteId删除笔记
 	public void deleteNoteById(@Param("noteId")Integer noteId);
 }

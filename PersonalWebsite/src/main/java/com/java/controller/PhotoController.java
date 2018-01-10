@@ -84,7 +84,7 @@ public class PhotoController {
         map.put("result", true);
         return map; 
     }
-    
+    //通过Id获取album信息
     @RequestMapping(value="/getAlbumById",method=RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> getAlbumById(@RequestParam("id")Integer albumId){
@@ -96,4 +96,24 @@ public class PhotoController {
     	map.put("result", album);
     	return map; 
     }
+    
+    //修改相册名
+    @RequestMapping(value="editAlbumById",method=RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> editAlbumById(@RequestParam("id")Integer albumId,@RequestParam("albumName")String albumName){
+    	Map<String,Object> map = new HashMap<String,Object>();
+    	albumDao.updateAlbumById(albumId, albumName);
+    	map.put("result", true);
+    	return map;
+    }
+    
+  //删除笔记
+  	@RequestMapping(value="/deleteAlbumById",method={RequestMethod.POST})
+  	@ResponseBody
+  	public Map<String,Object> deleteAlbumById(@RequestParam("id")Integer albumId){
+  		Map<String,Object> map = new HashMap<String,Object>();
+  		albumDao.deleteAlbumById(albumId);
+  		map.put("result", true);
+  		return map;
+  	}
 }

@@ -205,7 +205,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  </div>
 	</div>
 </div>
-<script>
+<script type="text/javascript">
     $(function(){
         // Replace the <textarea id="editor1"> with a CKEditor
         // instance, using default configuration.

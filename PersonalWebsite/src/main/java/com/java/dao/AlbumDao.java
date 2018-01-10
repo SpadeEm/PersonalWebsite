@@ -14,4 +14,8 @@ public interface AlbumDao {
 	public void addAlbum(@Param("albumName")String albumName,@Param("createTime")Date createTime);
 	//按照Id查相册信息
 	public Album getAlbumById(@Param("albumId")Integer albumId);
+	//编辑相册
+	public void updateAlbumById(@Param("albumId")Integer albumId,@Param("albumName")String albumName);
+	//删除相册
+	public void deleteAlbumById(@Param("albumId")Integer albumId);
 }

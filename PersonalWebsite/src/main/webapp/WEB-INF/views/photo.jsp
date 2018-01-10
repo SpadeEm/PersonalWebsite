@@ -139,7 +139,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  		<p id="creatTime"></p>
 			  		<%-- <div class="getAlbumId" style="display: none">${album.albumId}</div> --%>
 			  		<a href="" class="glyphicon glyphicon-arrow-up" data-toggle="modal"  data-target="#uploadModal" id="uploadPho">上传照片</a>
-					<a href="##" class="glyphicon glyphicon-pencil" id="albumEdit"></a>
+					<a href="##" class="glyphicon glyphicon-pencil" data-toggle="modal"  data-target="#editModal" id="albumEdit">修改相册</a>
 			  	</div>
 			  	<div style="padding: 20px;">
 				  	<div class="showpic container">
@@ -195,8 +195,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  </div>
 	</div>
 </div>
-<!-- 编辑相册 -->
 
+<!-- 编辑相册 -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -208,7 +208,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       	
        	<div class="input-group">
 		  <span class="input-group-addon">相册名</span>
-		  <input type="text" class="form-control" placeholder="" id="showTitle" >
+		  <input type="text" class="form-control" placeholder="" id="editAlbumName" >
 		</div>
       </div>
       <div class="modal-footer">
@@ -218,8 +218,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
   </div>
 </div>
-
-<script>
 
 <script type="text/javascript">
 $(function(){
@@ -261,6 +259,7 @@ $(function(){
 	    	 success:function(data){
 	    		$("#albumHead").html(data.result.albumName);
 	    		$("#creatTime").html("创建于"+data.createTime);
+	    		$("#editAlbumName").val(data.result.albumName);//给编辑功能的显示modal赋值
 	    		$("#uploadPho").attr("href",data.result.albumId);
 	    		//遍历显示照片
 	    		for (var i = 0; i < data.result.listPho.length; i++) {
@@ -306,6 +305,29 @@ $(function(){
         }
     });
 	 /* $('#file').fileinput('clear');//重置上传组件  */
+	 //修改相册名
+	 $("#albumUpdate").click(function(){
+		 $.ajax({
+			 url:'../photo/editAlbumById.do',
+			 data:{
+				 id:aId,
+				 albumName:$("#editAlbumName").val()
+				 },
+			 datatype:'json',
+			 type:'post',
+			 success:function(data){
+				 if(data.result==true){
+ 					$("#editModal").modal("hide");
+ 					window.location.reload();
+ 				}else{
+ 					alert("保存失败");
+ 				}
+			 },
+			 error:function(){
+				 alert("保存失败");
+			 }
+		 });
+	 });
 	 
 	 
 	

@@ -23,6 +23,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="getAlbumById" parameterType="Integer" resultMap="albumResultMap">
-		select * from album a,photo p where  a.ALBUM_ID = #{albumId} and a.ALBUM_ID=p.ALBUM_ID
+		select * from album a left join photo p on a.ALBUM_ID = p.ALBUM_ID where a.ALBUM_ID = #{albumId}
 	</select>
+	
+	<update id="updateAlbumById" parameterType="com.java.entity.Album">
+		update album a set a.ALBUM_NAME=#{albumName} where a.ALBUM_ID = #{albumId}
+	</update>
+	
+	<delete id="deleteAlbumById">
+		delete from album where ALBUM_ID = #{albumId}
+	</delete>
 </mapper>
