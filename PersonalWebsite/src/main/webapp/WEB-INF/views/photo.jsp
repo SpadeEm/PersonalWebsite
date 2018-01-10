@@ -140,6 +140,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  		<%-- <div class="getAlbumId" style="display: none">${album.albumId}</div> --%>
 			  		<a href="" class="glyphicon glyphicon-arrow-up" data-toggle="modal"  data-target="#uploadModal" id="uploadPho">上传照片</a>
 					<a href="##" class="glyphicon glyphicon-pencil" data-toggle="modal"  data-target="#editModal" id="albumEdit">修改相册</a>
+					<a href="##" class="glyphicon glyphicon-trash" data-toggle="modal"  data-target="#deleteModal" id="albumDelete">删除相册</a>
 			  	</div>
 			  	<div style="padding: 20px;">
 				  	<div class="showpic container">
@@ -217,6 +218,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       </div>
     </div>
   </div>
+</div>
+
+<!-- 删除提示框 -->
+<div>
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="noteTitle">提示</h4>
+	      </div>
+	      <div class="modal-body">
+	      	删除相册将会相册下的所有照片，是否删除？
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
+	        <button type="button" class="btn btn-danger"  id="deleteAlbum">删除</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </div>
 
 <script type="text/javascript">
@@ -298,8 +320,8 @@ $(function(){
      .on("fileuploaded", function(event, data) { //异步上传成功
         if(data.response.result==true)
         {
+        	$('#file').fileinput('clear');
         	alert('成功');
-        	$('#file').fileinput('clear');  
         }else{
         	alert('处理失败');
         }
@@ -322,6 +344,26 @@ $(function(){
  				}else{
  					alert("保存失败");
  				}
+			 },
+			 error:function(){
+				 alert("保存失败");
+			 }
+		 });
+	 });
+	 //删除相册
+	 $("#deleteAlbum").click(function(){
+		 $.ajax({
+			 url:'../photo/deleteAlbumById.do',
+			 data:{id:aId},
+			 dataType:'json',
+			 type:'post',
+			 success:function(data){
+				 if(data.result==true){
+	 					$("#editModal").modal("hide");
+	 					window.location.reload();
+	 				}else{
+	 					alert("保存失败");
+	 				}
 			 },
 			 error:function(){
 				 alert("保存失败");

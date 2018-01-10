@@ -15,6 +15,11 @@
 	/* line-height: 100px; */
 }
 
+#albumDelete{
+	float: right;
+	font-size:16px;
+}
+
 #albumEdit{
 	float: right;
 	font-size:16px;
