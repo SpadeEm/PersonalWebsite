@@ -103,7 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  			${notes.noteTitle} 
 			  		</h1> 
 			  		<a href="##" class="glyphicon glyphicon-pencil editNote" data-toggle="modal"  data-target="#editModal" >修改</a>
-			  		<a href=""  class="glyphicon glyphicon-trash" data-toggle="modal"  data-target="#uploadModal" id="deleteNote">删除</a>
+			  		<a href=""  class="glyphicon glyphicon-trash" data-toggle="modal"  data-target="#deleteModal">删除</a>
 			  		<p>创建于<fmt:formatDate value="${notes.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
 			  		<div class="noteId" style="display: none">${notes.noteId}</div>
 			  	</div>		 
@@ -132,58 +132,78 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!-- 新增笔记弹框 -->
 <div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="noteTitle">新增笔记</h4>
-      </div>
-      <div class="modal-body">
-       	<div class="input-group">
-		  <span class="input-group-addon">题目</span>
-		  <input type="text" class="form-control" placeholder="Title" id="title" >
-		</div>
-		<form id="textContent">
-            <textarea name="noteContent" id="noteContent" rows="10" cols="80">
-            </textarea>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" id="nateClose">关闭</button>
-        <button type="button" class="btn btn-primary"  id="noteSave">保存</button>
-      </div>
-    </div>
-  </div>
-</div>
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="noteTitle">新增笔记</h4>
+	      </div>
+	      <div class="modal-body">
+	       	<div class="input-group">
+			  <span class="input-group-addon">题目</span>
+			  <input type="text" class="form-control" placeholder="Title" id="title" >
+			</div>
+			<form id="textContent">
+	            <textarea name="noteContent" id="noteContent" rows="10" cols="80">
+	            </textarea>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal" id="nateClose">关闭</button>
+	        <button type="button" class="btn btn-primary"  id="noteSave">保存</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </div>
 <!-- 编辑笔记弹框 -->
 <div>
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="noteTitle">修改笔记</h4>
-      </div>
-      <div class="modal-body">
-      	
-       	<div class="input-group">
-		  <span class="input-group-addon">题目</span>
-		  <input type="text" class="form-control" placeholder="" id="showTitle" >
-		</div>
-		<form>
-            <textarea name="showNoteContent" id="showNoteContent" rows="10" cols="80">
-            </textarea>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
-        <button type="button" class="btn btn-primary"  id="noteUpdate">保存</button>
-      </div>
-    </div>
-  </div>
+	<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="noteTitle">修改笔记</h4>
+	      </div>
+	      <div class="modal-body">
+	      	
+	       	<div class="input-group">
+			  <span class="input-group-addon">题目</span>
+			  <input type="text" class="form-control" placeholder="" id="showTitle" >
+			</div>
+			<form>
+	            <textarea name="showNoteContent" id="showNoteContent" rows="10" cols="80">
+	            </textarea>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
+	        <button type="button" class="btn btn-primary"  id="noteUpdate">保存</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </div>
+<!-- 删除提示框 -->
+<div>
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="noteTitle">提示</h4>
+	      </div>
+	      <div class="modal-body">
+	      	您确定要删除该条笔记吗？
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
+	        <button type="button" class="btn btn-danger"  id="noteDelete">删除</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </div>
 <script>
     $(function(){
@@ -250,7 +270,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   		});
 	   		
 		});
+    	//更新
     	$("#noteUpdate").click(function(){
+    		if($("#showTitle").val().length=0||!$("#showTitle").val().trim()){
+    			alert("题目不能为空");
+    			return;
+    		}
 			$.ajax({
     			url:'../note/editNoteById.do',
     			data:{
@@ -262,32 +287,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			type:'post',
     			success:function(data){
     				if(data.result==true){
-    					$("#myModal").modal("hide");
+    					$("#editModal").modal("hide");
     					window.location.reload();
     				}else{
     					alert("保存失败");
     				}
+    			},
+    			error:function(){
+    				alert("保存失败");
     			}
     		});
 		});
-    	//打开编辑界面
-    	/* $("#editNote").click(function(){
-    		//清空modal中的内容
-    		$("#title").val("");
-    		CKEDITOR.instances.noteContent.setData('');
-    		$("#myModal").modal("show");
-    		var b = $("#noteId").val();
+    	//删除
+    	$("#noteDelete").click(function(){
     		$.ajax({
-    			url:'../note/getNoteById.do',
-    			data:{noteId:b},
+    			url:'../note/deleteNoteById.do',
+    			data:{noteId:a},
     			dataType:'json',
     			type:'post',
     			success:function(data){
-    				$("#title").val(data.result.noteTitle);
-    	    		CKEDITOR.instances.noteContent.setData(data.result.noteContent);
+    				if(data.result==true){
+    					$("#deleteModal").modal("hide");
+    					window.location.reload();
+    				}else{
+    					alert("输出失败");
+    				}
+    			},
+    			error:function(){
+    				alert("删除失败");
     			}
     		});
-    	}); */
+    	});
     	
     }); 
 </script>

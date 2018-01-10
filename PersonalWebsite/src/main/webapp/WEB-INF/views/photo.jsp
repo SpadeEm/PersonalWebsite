@@ -175,24 +175,51 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 
 <!-- 上传照片弹框 -->
-<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+<div>
+	<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">上传照片</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <div class="file-loading"> 
+	    		<input id="file" name="file" type="file" multiple>
+			</div>
+	        <div id="kartik-file-errors"></div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+<!-- 编辑相册 -->
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">上传照片</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="noteTitle">修改相册名</h4>
       </div>
       <div class="modal-body">
-        <div class="file-loading"> 
-    		<input id="file" name="file" type="file" multiple>
+      	
+       	<div class="input-group">
+		  <span class="input-group-addon">相册名</span>
+		  <input type="text" class="form-control" placeholder="" id="showTitle" >
 		</div>
-        <div id="kartik-file-errors"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
+        <button type="button" class="btn btn-primary"  id="albumUpdate">保存</button>
       </div>
     </div>
   </div>
 </div>
+
+<script>
 
 <script type="text/javascript">
 $(function(){
@@ -277,52 +304,12 @@ $(function(){
         }else{
         	alert('处理失败');
         }
-    })
-	//照片上传功能
-	/* $(".leftAlbum").click(function(){
-		var ablumId = $(this).attr("href");
-		//初始化上传组件 
-		$("#file").fileinput({
-			language: 'zh', //设置语言
-	        uploadUrl: "../photo/fileUploads.do", //上传的地址
-	        showUpload: true,
-	        uploadAsync:true,//是否为异步上传
-	        maxFileCount: 10,
-	        mainClass: "input-group-lg",
-	       	allowedFileExtensions: ["jpg", "png", "gif"],
-			msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-			removeFromPreviewOnError:true, //是否移除校验文件失败的文件  
-			uploadExtraData:function (previewId, index) {
-				return {
-					'id': ablumId
-					};
-			}
-	    }).on("filebatchuploadsuccess",function(event, data) {
-	    	if(data.response.result==true)
-	        {
-	    		alert('成功');
-	    		$('#file').fileinput('clear'); 
-	        }else{
-	        	alert('失败');
-	        }
-	    }) 
-	     .on("fileuploaded", function(event, data) { //异步上传成功
-	        if(data.response.result==true)
-	        {
-	        	alert('成功');
-	        	$('#file').fileinput('clear');  
-	        }else{
-	        	alert('处理失败');
-	        }
-	    })
-		 
-	});  */
-	  
-    
+    });
 	 /* $('#file').fileinput('clear');//重置上传组件  */
 	 
+	 
 	
-})
+});
 
 
 </script>

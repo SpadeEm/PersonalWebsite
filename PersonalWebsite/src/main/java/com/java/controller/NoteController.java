@@ -49,10 +49,11 @@ public class NoteController {
 	//修改笔记
 	@RequestMapping(value="/editNoteById",method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> editNoteById(@RequestParam("noteId")Integer noteId,@RequestParam("noteTitle")String noteTitle,
+	public Map<String,Object> editNoteById(@RequestParam("noteId")String noteId,@RequestParam("noteTitle")String noteTitle,
 			@RequestParam("noteContent")String noteContent){
+		Integer id = Integer.parseInt(noteId.substring(1));
 		Map<String,Object> map = new HashMap<String,Object>();
-		noteDao.updateNoteById(noteId, noteTitle, noteContent);
+		noteDao.updateNoteById(id, noteTitle, noteContent);
 		map.put("result", true);
 		return map;
 	}
@@ -61,17 +62,19 @@ public class NoteController {
 	@ResponseBody
 	public Map<String,Object> getNoteById(@RequestParam("noteId")String noteId,Model model){
 		Map<String,Object> map = new HashMap<String,Object>();
-		String strId = noteId.substring(1);
-		Integer id = Integer.parseInt(strId);
+		Integer id = Integer.parseInt(noteId.substring(1));
 		Note note = noteDao.getNoteById(id);
 		map.put("result", note);
 		return map;
 	}
-	
-	@RequestMapping(value="/deleteNoteById",method={RequestMethod.POST,RequestMethod.GET})
+	//删除笔记
+	@RequestMapping(value="/deleteNoteById",method={RequestMethod.POST})
 	@ResponseBody
-	public String deleteNoteById(@RequestParam("noteId")Integer noteId){
-		noteDao.deleteNoteById(noteId);
-		return null;
+	public Map<String,Object> deleteNoteById(@RequestParam("noteId")String noteId){
+		Map<String,Object> map = new HashMap<String,Object>();
+		Integer id = Integer.parseInt(noteId.substring(1));
+		noteDao.deleteNoteById(id);
+		map.put("result", true);
+		return map;
 	}
 }
