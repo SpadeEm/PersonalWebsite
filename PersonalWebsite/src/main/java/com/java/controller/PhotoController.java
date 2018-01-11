@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -68,14 +69,17 @@ public class PhotoController {
         	if (itemfile.getSize()<=0) {
     			return null;
     		}
-            System.out.println("fileName："+itemfile.getOriginalFilename());
-            String path="D:/personal/photo/"+itemfile.getOriginalFilename();
-             
+            //改过后的名字=uuid随机生成的文件名称+文件后缀名  
+            String newName = UUID.randomUUID().toString().replaceAll("-","") + 
+            		itemfile.getOriginalFilename().substring(itemfile.getOriginalFilename().lastIndexOf("."));
+            System.out.println(newName);
+            String path="D:/personal/photo/"+newName;
+//            String path="D:/personal/photo/"+"11.jpg";
             File newFile=new File(path);
             //通过CommonsMultipartFile的方法直接写文件（注意这个时候）
             itemfile.transferTo(newFile);
             //虚拟地址
-            String nPath="/photo/"+itemfile.getOriginalFilename();
+            String nPath="/photo/"+newName;
             photoDao.savePhotoByAlbumId(itemfile.getOriginalFilename(), nPath, albumId);
         	
 		}  

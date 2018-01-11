@@ -288,6 +288,7 @@ $(function(){
 	    			$(".showpic").append("<img src="+data.result.listPho[i].photoPath+">");
 				}
 	    		$('.showpic img').addClass("img-responsive img-thumbnail");
+	    		//$('.showpic a').attr("href","##");
 	    	 }
 	     });
 	     
@@ -297,7 +298,7 @@ $(function(){
 		language: 'zh', //设置语言
         uploadUrl: "../photo/fileUploads.do", //上传的地址
         showUpload: true,
-        uploadAsync:true,//是否为异步上传
+        uploadAsync:false,//是否为异步上传
         maxFileCount: 10,
         mainClass: "input-group-lg",
        	allowedFileExtensions: ["jpg", "png", "gif"],
@@ -308,7 +309,7 @@ $(function(){
 				'id': aId
 				};
 		}
-    })/* .on("filebatchuploadsuccess",function(event, data) {
+    }).on("filebatchuploadsuccess",function(event, data) {
     	if(data.response.result==true)
         {
     		alert('成功');
@@ -316,8 +317,8 @@ $(function(){
         }else{
         	alert('失败');
         }
-    }) */
-     .on("fileuploaded", function(event, data) { //异步上传成功
+    })
+     /* .on("fileuploaded", function(event, data) { //异步上传成功
         if(data.response.result==true)
         {
         	$('#file').fileinput('clear');
@@ -325,7 +326,7 @@ $(function(){
         }else{
         	alert('处理失败');
         }
-    });
+    }); */
 	 /* $('#file').fileinput('clear');//重置上传组件  */
 	 //修改相册名
 	 $("#albumUpdate").click(function(){
