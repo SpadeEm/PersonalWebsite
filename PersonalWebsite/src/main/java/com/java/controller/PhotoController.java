@@ -74,7 +74,6 @@ public class PhotoController {
             		itemfile.getOriginalFilename().substring(itemfile.getOriginalFilename().lastIndexOf("."));
             System.out.println(newName);
             String path="D:/personal/photo/"+newName;
-//            String path="D:/personal/photo/"+"11.jpg";
             File newFile=new File(path);
             //通过CommonsMultipartFile的方法直接写文件（注意这个时候）
             itemfile.transferTo(newFile);

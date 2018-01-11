@@ -219,7 +219,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
   </div>
 </div>
-
 <!-- 删除提示框 -->
 <div>
 	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -240,11 +239,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  </div>
 	</div>
 </div>
+<!-- 照片显示框 -->
+<div>
+	<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title">照片</h4>
+	      </div>
+	      <div class="modal-body" >
+      		<center><img alt="" src="" class="img-responsive img-show" id="imgShow"></center>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
+	        <button type="button" class="btn btn-danger"  id="deletePhoto">删除</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
 
 <script type="text/javascript">
+window.onload = function() {  
+}
+
 $(function(){
 	$("#albumContent").hide();
 	var aId;
+	var path
 	//初始化tooltips插件
 	$('[data-toggle="tooltip"]').tooltip();
 	$("#albumSave").click(function(){
@@ -272,6 +295,7 @@ $(function(){
 	$(".leftAlbum").unbind('click').click(function(){
 		aId = $(this).attr("href");
 		$("#albumContent").show();
+		$('.showpic div').remove();
 		$('.showpic img').remove();
 	     $.ajax({
 	    	 url:'../photo/getAlbumById.do',
@@ -285,14 +309,33 @@ $(function(){
 	    		$("#uploadPho").attr("href",data.result.albumId);
 	    		//遍历显示照片
 	    		for (var i = 0; i < data.result.listPho.length; i++) {
-	    			$(".showpic").append("<img src="+data.result.listPho[i].photoPath+">");
+	    			$(".showpic").append("<div><a ><img src="+data.result.listPho[i].photoPath+"></a></div>");
 				}
-	    		$('.showpic img').addClass("img-responsive img-thumbnail");
-	    		//$('.showpic a').attr("href","##");
+	    		$('.showpic div').addClass("col-md-4");
+	    		$('.showpic a').addClass("thumbnail showBig");
+	    		//$('.showpic img').addClass("img-responsive img-thumbnail");
+	    		$('.showpic a').attr("href","##");
+	    		$(".showBig").unbind('click').click(function(){
+	    			path = $(this).find('img').attr('src');
+	    			$("#imgShow").attr('src',path);
+	    			$("#showModal").modal('show');
+	    		 });
+	    		
+	    		/* var w = 500;//设置最大宽度,也可根据img的外部容器 而动态获得,比如：$("#demo").width();  
+	     	    $(".showpic img").each(function() {//如果有很多图片,使用each()遍历   
+	     	        var img_w = $(this).width();//图片宽度   
+	     	        var img_h = $(this).height();//图片高度   
+	     	        if (img_w > w) {//如果图片宽度超出指定最大宽度   
+	     	            var height = (w * img_h) / img_w; //高度等比缩放   
+	     	            $(this).css( {  
+	     	                "width" : w,"height" : height  
+	     	            });//设置缩放后的宽度和高度   
+	     	        }  
+	     	    });  */
 	    	 }
 	     });
 	     
-	   });
+	   }); 
 	//上传照片
 	$("#file").fileinput({
 		language: 'zh', //设置语言
@@ -372,8 +415,6 @@ $(function(){
 		 });
 	 });
 	 
-	 
-	
 });
 
 
