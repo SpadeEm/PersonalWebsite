@@ -1,0 +1,23 @@
+.username-group{
+	width:500px;
+	height:40px; 
+}
+
+.password-group{
+	width:500px;
+	height:40px;
+}
+
+.dvide{
+	width:500px;
+	height:40px;
+}
+
+#loginModal{
+	width: 500ox;
+}
+
+#login{
+	width: 80px;
+	height: 40px;
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.dao.UserDao">
+	<resultMap type="com.java.entity.User" id="userResultMap">
+		<id property="userId" column="USER_ID"/>
+		<result property="userName" column="USER_NAME"/>
+		<result property="password" column="PASSWORD"/>	
+	</resultMap>
+	
+	<select id="login" parameterType="String" resultMap="userResultMap">
+		select * from user u where u.USER_NAME = #{userName} and u.PASSWORD = #{password}
+	</select>
+</mapper>
