@@ -17,5 +17,5 @@ public interface NoteDao {
 	//通过noteId查询笔记
 	public Note getNoteById(@Param("noteId")Integer noteId);
 	//通过noteId删除笔记
-	public void deleteNoteById(@Param("noteId")Integer noteId);
+	public Boolean deleteNoteById(@Param("noteId")Integer noteId);
 }

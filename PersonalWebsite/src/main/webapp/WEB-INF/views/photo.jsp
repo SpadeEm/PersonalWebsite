@@ -261,9 +261,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 
 <script type="text/javascript">
-window.onload = function() {  
-}
-
 $(function(){
 	$("#albumContent").hide();
 	var aId;
@@ -315,6 +312,7 @@ $(function(){
 	    		$('.showpic a').addClass("thumbnail showBig");
 	    		//$('.showpic img').addClass("img-responsive img-thumbnail");
 	    		$('.showpic a').attr("href","##");
+	    		//照片modal显示
 	    		$(".showBig").unbind('click').click(function(){
 	    			path = $(this).find('img').attr('src');
 	    			$("#imgShow").attr('src',path);
@@ -404,9 +402,30 @@ $(function(){
 			 success:function(data){
 				 if(data.result==true){
 	 					$("#editModal").modal("hide");
+	 					alert("删除成功");
 	 					window.location.reload();
 	 				}else{
-	 					alert("保存失败");
+	 					alert("删除失败");
+	 				}
+			 },
+			 error:function(){
+				 alert("删除失败");
+			 }
+		 });
+	 });
+	 
+	 $("#deletePhoto").click(function(){
+		 $.ajax({
+			 url:'../photo/deletePhoByPath.do',
+			 data:{path:$("#imgShow").attr('src')},
+			 dataType:'json',
+			 type:'post',
+			 success:function(data){
+				 if(data.result==true){
+	 					$("#showModal").modal("hide");
+	 					window.location.reload();
+	 				}else{
+	 					alert("删除失败");
 	 				}
 			 },
 			 error:function(){
@@ -414,7 +433,6 @@ $(function(){
 			 }
 		 });
 	 });
-	 
 });
 
 

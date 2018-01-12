@@ -73,13 +73,18 @@ public class PhotoController {
             String newName = UUID.randomUUID().toString().replaceAll("-","") + 
             		itemfile.getOriginalFilename().substring(itemfile.getOriginalFilename().lastIndexOf("."));
             System.out.println(newName);
-            String path="D:/personal/photo/"+newName;
+            String path="D:/personal/"+newName;
+            //判断存储的目录文件夹是否存在，不存在则创建
+            File dirFile = new File("D:/personal");
+            if (!dirFile.exists()) {
+            	dirFile.mkdirs();
+			}
             File newFile=new File(path);
             //通过CommonsMultipartFile的方法直接写文件（注意这个时候）
             itemfile.transferTo(newFile);
-            //虚拟地址
+            //虚拟路径
             String nPath="/photo/"+newName;
-            photoDao.savePhotoByAlbumId(itemfile.getOriginalFilename(), nPath, albumId);
+            photoDao.savePhotoByAlbumId(itemfile.getOriginalFilename(), nPath, path,albumId);
         	
 		}  
         long  endTime=System.currentTimeMillis();
@@ -110,13 +115,42 @@ public class PhotoController {
     	return map;
     }
     
-  //删除笔记
+    //删除album
   	@RequestMapping(value="/deleteAlbumById",method={RequestMethod.POST})
   	@ResponseBody
   	public Map<String,Object> deleteAlbumById(@RequestParam("id")Integer albumId){
   		Map<String,Object> map = new HashMap<String,Object>();
-  		albumDao.deleteAlbumById(albumId);
-  		map.put("result", true);
+  		List<String> ListRealPath = photoDao.getPhoByAlbumId(albumId);
+  		Boolean result = albumDao.deleteAlbumById(albumId);
+  		if (result==false) {
+  			map.put("result", result);
+  	  		return map;
+		}
+  		for (String rPath:ListRealPath) {
+  			File file = new File(rPath);
+  			file.delete();
+		}
+  		map.put("result", result);
+  		return map;
+  	}
+  	
+  	//删除photo
+  	@RequestMapping(value="/deletePhoByPath",method={RequestMethod.POST})
+  	@ResponseBody
+  	public Map<String,Object> deletePhoByPath(@RequestParam("path")String photoPath){
+  		Map<String,Object> map = new HashMap<String,Object>();
+  		//通过虚拟路径获取照片真实路径
+  		String rPath = photoDao.getRealPath(photoPath);
+  		Boolean result = photoDao.deletePhoByPath(photoPath);
+  		if (result == false) {
+			map.put("result", result);
+			return map;
+		}
+  		File file = new File(rPath);
+  		//删除服务器中的文件
+  		Boolean resp =  file.delete();
+  		System.out.println(resp);
+  		map.put("result", result);
   		return map;
   	}
 }

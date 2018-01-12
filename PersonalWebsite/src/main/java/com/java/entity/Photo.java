@@ -4,8 +4,15 @@ public class Photo {
 	private Integer photoId;
 	private String photoName;
 	private String photoPath;
+	private String realPath;
 	private Album album;
 	
+	public String getRealPath() {
+		return realPath;
+	}
+	public void setRealPath(String realPath) {
+		this.realPath = realPath;
+	}
 	public Album getAlbum() {
 		return album;
 	}

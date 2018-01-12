@@ -17,5 +17,5 @@ public interface AlbumDao {
 	//编辑相册
 	public void updateAlbumById(@Param("albumId")Integer albumId,@Param("albumName")String albumName);
 	//删除相册
-	public void deleteAlbumById(@Param("albumId")Integer albumId);
+	public Boolean deleteAlbumById(@Param("albumId")Integer albumId);
 }
