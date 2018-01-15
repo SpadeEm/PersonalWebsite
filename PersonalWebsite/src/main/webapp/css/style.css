@@ -1,5 +1,14 @@
-#nav{
-	margin-bottom: 0px;
-	height:80px;
-	
+.navbar{
+	margin-bottom:0;
+	-webkit-border-radius: 0;
+    -moz-border-radius: 0;
+	border-radius: 0;
+}
+
+#navHead{
+		margin-left:40%;
+}
+.container-fluid{
+	padding-left: 0px;
+    padding-right: 0px;
 }

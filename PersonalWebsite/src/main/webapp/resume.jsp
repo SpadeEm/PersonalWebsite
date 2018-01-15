@@ -111,7 +111,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                   <!-- Progress Box -->
                   <div class="progress-box">
-                      <h5>PHP <span class="color-heading pull-right">87%</span></h5>
+                      <h5>Java <span class="color-heading pull-right">87%</span></h5>
                       <div class="progress">
                           <div class="progress-bar bg-color-base" role="progressbar" data-width="87"></div>
                       </div>

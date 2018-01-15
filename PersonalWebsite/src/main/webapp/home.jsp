@@ -11,6 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>主页</title>
 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
@@ -21,10 +22,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 <!-- 导航栏 -->
-<nav id="nav" class="navbar navbar-inverse" role="navigation">
+<nav id="nav" class="navbar navbar-inverse " role="navigation" >
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header" style="margin-left:40%">
+    <div class="navbar-header" id="navHead">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
@@ -56,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div><!-- /.container-fluid -->
 </nav>
 
-<div id="myCarousel" class="carousel slide">
+<div id="myCarousel" class="carousel slide container-fluid">
 	<ol class="carousel-indicators">
 		<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 		<li data-target="#myCarousel" data-slide-to="1"></li>
