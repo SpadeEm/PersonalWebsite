@@ -45,10 +45,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <li class="dropdown">
           <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li id="userLogin"><a href="#" class="glyphicon glyphicon-list" data-toggle="modal"  data-target="#loginModal">登录</a></li>
+            <li ><a href="#" class="glyphicon glyphicon-list" data-toggle="modal"  data-target="#loginModal" id="userLogin">登录</a></li>
             <li><a href="#" class="glyphicon glyphicon-globe">资料</a></li>
             <li><a href="#" class="glyphicon glyphicon-cog">设置</a></li>
-            <li><a href="#" class="glyphicon glyphicon-off">注销</a></li>
+            <li><a href="#" class="glyphicon glyphicon-off" style="display: none" id="logout">注销</a></li>
           </ul>
         </li>
       </ul>
@@ -83,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="modal-content">
       <div class="modal-header">
       	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <center><h3 class="modal-title" id="noteTitle">登录</h3></center>
+        <center><h3 class="modal-title" >登录</h3></center>
       </div>
       <div class="modal-body">
         <div class="dvide"></div>
@@ -116,6 +116,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </body>
 <script type="text/javascript">
 $(function(){
+	//登录验证
+	$.ajax({
+		url:'<%=basePath%>/user/LoginCheck.do',
+		dataType:'json',
+		type:'post',
+		success:function(data){
+			if (data.result==true) {
+				$("#userLogin").hide();
+				$("#logout").show();
+			}
+		},
+		error:function(){
+			 alert("验证登录失败");
+		 }
+	});
 	$("#login").click(function(){
 		$.ajax({
 			url:'<%=basePath%>/user/login.do',
@@ -129,15 +144,37 @@ $(function(){
 				if(data.result==true){
 					$("#loginModal").modal('hide');
 					$("#userLogin").hide();
+					$("#logout").show();
+					alert("登录成功");
 				}else{
-					alert("保存失败");
+					alert("登录失败");
 				}
 			}
 		});
 	});
+	//登录框关闭时清空框内的内容
 	$('#loginModal').on('hidden.bs.modal', function (e) {
 		$("#username").val("");
 		$("#password").val("");
+	});
+	
+	$("#logout").click(function(){
+		$.ajax({
+			url:'<%=basePath%>/user/logout.do',
+			dataType:'json',
+			type:'post',
+			success:function(data){
+				if(data.result==true){
+					alert("注销成功");
+					window.location.reload();
+				}else{
+					alert("注销失败");
+				}
+			},
+			error:function(){
+				 alert("注销失败");
+			 }
+		});
 	});
 });
 </script>

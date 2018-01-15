@@ -103,7 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  			${notes.noteTitle} 
 			  		</h1> 
 			  		<a href="##" class="glyphicon glyphicon-pencil editNote" data-toggle="modal"  data-target="#editModal" >修改</a>
-			  		<a href=""  class="glyphicon glyphicon-trash" data-toggle="modal"  data-target="#deleteModal">删除</a>
+			  		<a href=""  class="glyphicon glyphicon-trash editDelete" data-toggle="modal"  data-target="#deleteModal">删除</a>
 			  		<p>创建于<fmt:formatDate value="${notes.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
 			  		<div class="noteId" style="display: none">${notes.noteId}</div>
 			  	</div>		 
@@ -216,6 +216,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	$('[data-toggle="tooltip"]').tooltip();
     	//清空modal中的内容
     	var a;
+    	//验证是否登录
+    	$.ajax({
+    		url:'../user/LoginCheck.do',
+    		dataType:'json',
+    		type:'post',
+    		success:function(data){
+    			if (data.result==false) {
+    				$(".editNote").hide();
+    				$(".editDelete").hide();
+    				$("#addNote").hide();
+    			}
+    		},
+    		error:function(){
+				 alert("验证登录失败");
+			 }
+    	});
     	$("#addNote").click(function(){
     		$("#title").val("");
     		CKEDITOR.instances.noteContent.setData('');

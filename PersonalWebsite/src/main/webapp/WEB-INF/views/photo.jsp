@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="container jumbotron" id="jum">
 	<div class ="row">
 		<hgroup>
-		<h2>相册</h2>
+		<h2 id="zz">相册</h2>
 	</hgroup>
 	</div>
 </div>
@@ -62,7 +62,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div id="menu">
 				<h2 class="mynote">
 					我的相册	
-					<a id="add-album" href="##" class="glyphicon glyphicon-plus"  data-toggle="modal"  data-target="#addModal"></a>				
+					<a id="addAlbum" href="##" class="glyphicon glyphicon-plus"  data-toggle="modal"  data-target="#addModal"></a>				
 				</h2>
 			</div>
 			<div id="noteGroup" class="list-group">
@@ -267,6 +267,25 @@ $(function(){
 	var path
 	//初始化tooltips插件
 	$('[data-toggle="tooltip"]').tooltip();
+	//登录验证
+	$.ajax({
+		url:'../user/LoginCheck.do',
+		dataType:'json',
+		type:'post',
+		success:function(data){
+			if (data.result==false) {
+				$("#addAlbum").hide();
+				$("#uploadPho").hide();
+				$("#albumDelete").hide();
+				$("#albumEdit").hide();
+				$("#deletePhoto").hide();
+
+			}
+		},
+		error:function(){
+			 alert("验证登录失败");
+		 }
+	});
 	$("#albumSave").click(function(){
 		if ($("#albumName").val().length=0||!$("#albumName").val().trim()) {
 			alert("相册名不能为空");
