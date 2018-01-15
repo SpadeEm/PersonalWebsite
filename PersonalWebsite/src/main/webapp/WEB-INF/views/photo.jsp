@@ -70,7 +70,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  <c:forEach items="${PageInfo.list }" var="album">
 			  <%-- <div class="leftAlbumId" style="display: none">${album.albumId}</div> --%>
 			  <a href="${album.albumId}" role="tab" data-toggle="tab" class="list-group-item leftAlbum" >
-			  	<img alt="" src="../images/pho_null.jpg" class="head-pic">
+			  	<c:if test="${empty album.listPho}">
+			  		<img alt="" src="../images/pho_null.jpg" class="responsive head-pic">
+			  	</c:if>
+			  	<c:if test="${album.listPho[0].photoPath!=null}">
+			  		<img alt="" src="${album.listPho[0].photoPath}" class="responsive head-pic">
+			  	</c:if>
 			  	${album.albumName}
 			  </a>
 			  </c:forEach>
@@ -136,7 +141,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 <div>
 			  <div id="albumContent">
 			  	<div class="show-albumName">
-			  		<h1 id="albumHead"> </h1> 
+			  		<center>
+			  			<h1 id="albumHead"> </h1> 
+			  		</center>
 			  		<p id="creatTime"></p>
 			  		<%-- <div class="getAlbumId" style="display: none">${album.albumId}</div> --%>
 			  		<a href="" class="glyphicon glyphicon-arrow-up" data-toggle="modal"  data-target="#uploadModal" id="uploadPho">上传照片</a>
