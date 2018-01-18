@@ -15,7 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<select id="getAllAlbums" resultMap="albumResultMap">
-		select a.ALBUM_ID,a.ALBUM_NAME,a.CREATE_TIME,p.PHOTO_ID,p.PHOTO_NAME,p.PHOTO_PATH,p.REAL_PATH from album a left join photo p on a.ALBUM_ID = p.ALBUM_ID  group by a.ALBUM_ID
+		select a.ALBUM_ID,a.ALBUM_NAME,a.CREATE_TIME,p.PHOTO_ID,p.PHOTO_NAME,p.PHOTO_PATH,p.REAL_PATH from album a left join photo p 
+		on a.ALBUM_ID = p.ALBUM_ID group by a.ALBUM_ID
 	</select>
 	
 	<insert id="addAlbum">

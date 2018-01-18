@@ -73,9 +73,13 @@ public class PhotoController {
             String newName = UUID.randomUUID().toString().replaceAll("-","") + 
             		itemfile.getOriginalFilename().substring(itemfile.getOriginalFilename().lastIndexOf("."));
             System.out.println(newName);
+            //windows配置虚拟路径
             String path="D:/personal/"+newName;
             //判断存储的目录文件夹是否存在，不存在则创建
             File dirFile = new File("D:/personal");
+            //linux配置虚拟路径
+            /*String path="/home/personal"+newName;
+            File dirFile = new File("/home/personal");*/
             if (!dirFile.exists()) {
             	dirFile.mkdirs();
 			}

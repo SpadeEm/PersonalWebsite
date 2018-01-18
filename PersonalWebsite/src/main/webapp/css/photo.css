@@ -51,6 +51,10 @@
 	overflow:auto;
 }
 
+.jumbotron{
+	margin-bottom:0px;
+}
+
 /* .img-thumbnail{
 	display:inline-block;
 	max-width:100%;
