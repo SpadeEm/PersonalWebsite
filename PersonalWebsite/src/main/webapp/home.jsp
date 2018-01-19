@@ -32,14 +32,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<%=basePath%>home.jsp">home</a>
+      <a class="navbar-brand" href="<%=basePath%>home.jsp">主页</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ><a href="<%=basePath%>/note/getAllNotes.do">blog <span class="sr-only">(current)</span></a></li>
-        <li><a href="<%=basePath%>/photo/getAllAlbums.do">picture</a></li>
+        <li ><a href="<%=basePath%>/note/getAllNotes.do">学习笔记 <span class="sr-only">(current)</span></a></li>
+        <li><a href="<%=basePath%>/photo/getAllAlbums.do">相册</a></li>
         <li><a href="#">link</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

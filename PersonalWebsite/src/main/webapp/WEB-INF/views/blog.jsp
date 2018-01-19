@@ -34,14 +34,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="<%=basePath%>home.jsp">home</a>
+	      <a class="navbar-brand" href="<%=basePath%>home.jsp">主页</a>
 	    </div>
 	
 	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
-	        <li ><a href="../note/getAllNotes.do">blog <span class="sr-only">(current)</span></a></li>
-	        <li><a href="../photo/getAllAlbums.do">picture</a></li>
+	        <li ><a href="../note/getAllNotes.do">学习笔记 <span class="sr-only">(current)</span></a></li>
+	        <li><a href="../photo/getAllAlbums.do">相册</a></li>
 	        <li><a href="#">link</a></li>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
@@ -99,7 +99,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			<!-- 内容显示 -->
 			<div class="col-md-8" border="1">
-				<div class="tab-content">
+				<%-- <div class="tab-content">
 				  <c:forEach items="${PageInfo.list }" var="notes">  
 				  <div role="tabpanel" class="tab-pane" id="${notes.noteId}">
 				  	<div class="title">
@@ -110,27 +110,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  		</center>
 				  		<a href="##" class="glyphicon glyphicon-pencil editNote" data-toggle="modal"  data-target="#editModal" >修改</a>
 				  		<a href=""  class="glyphicon glyphicon-trash editDelete" data-toggle="modal"  data-target="#deleteModal">删除</a>
+				  		<a href="../note/downNote.do?noteId=${notes.noteId}" class="down">导出</a>
 				  		<p>创建于<fmt:formatDate value="${notes.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
-				  		<div class="noteId" style="display: none">${notes.noteId}</div>
 				  	</div>		 
 				  	<div>${notes.noteContent}</div>
 				  </div> 
 				  </c:forEach>
-				</div> 
-				<!-- <div>
-				  <div id="showNote">
-				  	<div class="title">
-				  		<h1 id="noteHead"> <a href="##" class="glyphicon glyphicon-pencil" id="noteEdit"></a></h1> 
-				  		<p id="creatTime"></p>
-				  		<div class="noteId" id="noteId" style="display: none"></div>
-				  		<a href="" class="glyphicon glyphicon-pencil" data-toggle="modal"  data-target="#uploadModal" id="editNote">修改</a>
-				  		<a href="" class="glyphicon glyphicon-trash" data-toggle="modal"  data-target="#uploadModal" id="deleteNote">删除</a>
-				  	</div>
-				  	<div style="padding: 20px;">
-					  	<div id="showNoteContent" class="showNoteContent"></div>
+				</div>  --%>
+				<div id="showNote">
+					<div class="title">
+						<center><h1 id="noteHead"></h1></center>
+						<p id="createTime"></p>
+						<div class="noteId" id="noteId" style="display: none"></div>
+						<a href="##" class="glyphicon glyphicon-pencil editNote" data-toggle="modal"  data-target="#editModal" >修改</a>
+				  		<a href=""  class="glyphicon glyphicon-trash editDelete" data-toggle="modal"  data-target="#deleteModal">删除</a>
+				  		<a href="" class="glyphicon glyphicon-download-alt down" id="down" style="display: none">导出</a>
 					</div>
-				  </div>
-				</div> -->
+					<div style="padding: 20px;">
+				 		<div id="content" class="content"></div>
+					</div>
+				</div>
 				
 			</div>
 		</div>
@@ -216,6 +215,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         CKEDITOR.replace( 'showNoteContent' );
     	//初始化tooltip
     	$('[data-toggle="tooltip"]').tooltip();
+    	$("#showNote").hide();
     	//清空modal中的内容
     	var a;
     	//验证是否登录
@@ -228,6 +228,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     				$(".editNote").hide();
     				$(".editDelete").hide();
     				$("#addNote").hide();
+    				$("#down").hide();
     			}
     		},
     		error:function(){
@@ -264,14 +265,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	});
     	});
     	
-    	//给edit界面的noteId传值
+    	//显示笔记内容
     	$(".leftTitle").unbind('click').click(function(){
     		//清空modal中的内容
     		//$("#title").val("");
     		//CKEDITOR.instances.noteContent.setData('');
     		a =$(this).attr("href");
-    		//打开编辑界
-    		
+    		$("#showNote").show();
+    		$("#showNoteContent").remove();
+    		$.ajax({
+    			url:'../note/getNoteById.do',
+    			data:{noteId:a},
+    			dataType:'json',
+    			type:'post',
+    			success:function(data){
+    				$("#noteHead").html(data.result.noteTitle);    				
+    				$("#createTime").html("创建于"+data.createTime);
+    				$("#content").html(data.result.noteContent);
+    				var str =$("#content").val();
+    	    		$("#down").attr('href','../note/downNote.do?noteId='+18+'&noteContent='+$("#content").val()+'');
+    			},
+    			error:function(){
+    			}
+    		})
    		});
     	//编辑界面显示
     	$(".editNote").click(function(){
@@ -295,7 +311,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			return;
     		}
 			$.ajax({
-    			url:'../note/editNoteById.do',
+   				url:'../note/editNoteById.do',
     			data:{
     				noteId:a,
     				noteTitle:$("#showTitle").val(),
@@ -336,8 +352,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			}
     		});
     	});
+    	//导出笔记文档
+    	/* $("#down").click(function(){
+    		$.get("../note/downNote.do",{noteId:a},function(data){
+    		    
+    		  });
+    		$.ajax({
+    			url:'../note/downNote.do',
+    			data:{noteId:a},
+    			type:'get',
+    			dataType:'json',
+    			success:function(data){
+    				
+    			},
+    			error:function(){
+    				alert("导出失败");
+    			}
+    		});
+    	}); */
     	
-    }); 
+  	}); 
 </script>
 </body>
 </html>
