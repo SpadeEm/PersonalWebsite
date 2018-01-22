@@ -38,9 +38,9 @@ public class FreemarkerUtil {
 
 	    public static File createDoc(Map<String,Object> dataMap,String type){
 	    	//windows路径
-	        /*String name = "D:/personal/"+(int)(Math.random()*100000)+".doc";*/
+	        String name = "D:/personal/"+(int)(Math.random()*100000)+".doc";
 	        //Linux路径
-	        String name = "/home/personal/"+(int)(Math.random()*100000)+".doc";
+	        /*String name = "/home/personal/"+(int)(Math.random()*100000)+".doc";*/
 	        File f = new File(name);
 	        Template t = allTemplate.get(type);
 	        try{
