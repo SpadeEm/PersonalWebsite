@@ -17,6 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/home.css">
+<link rel="shortcut icon" href="images/favicon.ico"/>
 <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 </head>
@@ -32,24 +33,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<%=basePath%>home.jsp">主页</a>
+      <a class="navbar-brand glyphicon glyphicon-home" href="<%=basePath%>home.jsp">主页</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ><a href="<%=basePath%>/note/getAllNotes.do">学习笔记 <span class="sr-only">(current)</span></a></li>
-        <li><a href="<%=basePath%>/photo/getAllAlbums.do">相册</a></li>
-        <li><a href="#">link</a></li>
+        <li ><a href="<%=basePath%>/note/getAllNotes.do" class="glyphicon glyphicon-book">学习笔记 <span class="sr-only">(current)</span></a></li>
+        <li><a href="<%=basePath%>/photo/getAllAlbums.do" class="glyphicon glyphicon-picture">相册</a></li>
+        <li><a href="<%=basePath%>/resume.jsp" class="glyphicon glyphicon-file">link</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li ><a href="#" class="glyphicon glyphicon-list" data-toggle="modal"  data-target="#loginModal" id="userLogin">登录</a></li>
-            <li><a href="#" class="glyphicon glyphicon-globe">资料</a></li>
-            <li><a href="#" class="glyphicon glyphicon-cog">设置</a></li>
-            <li><a href="#" class="glyphicon glyphicon-off" style="display: none" id="logout">注销</a></li>
+            <li class="operate-btn"><a href="#" class="glyphicon glyphicon-list" data-toggle="modal"  data-target="#loginModal" id="userLogin">登录</a></li>
+            <li><a href="#" class="operate-btn glyphicon glyphicon-globe">资料</a></li>
+            <li><a href="#" class="operate-btn glyphicon glyphicon-cog">设置</a></li>
+            <li><a href="#" class="operate-btn glyphicon glyphicon-off" style="display: none" id="logout">注销</a></li>
           </ul>
         </li>
       </ul>

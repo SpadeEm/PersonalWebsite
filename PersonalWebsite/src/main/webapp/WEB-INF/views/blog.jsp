@@ -17,6 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="../css/blog.css">
 <link rel="stylesheet" type="text/css" href="../css/style.css">
+<link rel="shortcut icon" href="../images/favicon.ico"/>
 <script type="text/javascript" src="../js/jquery-2.0.3.min.js"></script>
 <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
@@ -34,15 +35,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="<%=basePath%>home.jsp">主页</a>
+	      <a class="navbar-brand glyphicon glyphicon-home" href="<%=basePath%>home.jsp">主页</a>
 	    </div>
 	
 	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
-	        <li ><a href="../note/getAllNotes.do">学习笔记 <span class="sr-only">(current)</span></a></li>
-	        <li><a href="../photo/getAllAlbums.do">相册</a></li>
-	        <li><a href="#">link</a></li>
+	        <li ><a href="../note/getAllNotes.do" class="glyphicon glyphicon-book">学习笔记 <span class="sr-only">(current)</span></a></li>
+	        <li><a href="../photo/getAllAlbums.do" class="glyphicon glyphicon-picture">相册</a></li>
+	        <li><a href="<%=basePath%>/resume.jsp" class="glyphicon glyphicon-file">link</a></li>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
