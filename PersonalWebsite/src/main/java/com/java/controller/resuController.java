@@ -18,9 +18,9 @@ public class resuController {
 	@RequestMapping(value="/downFile")
 	public void downFile(HttpServletRequest request,HttpServletResponse response){
 		//windows路径
-		File file = new File("D:/personal/resume.docx");
+		/*File file = new File("D:/personal/resume.docx");*/
 		//Linux路径
-		/*File file = new File("/home/personal/resume.docx");*/
+		File file = new File("/home/personal/resume.docx");
 		response.setCharacterEncoding("utf-8");
 	    response.setContentType("multipart/form-data");
 	    response.setHeader("Content-Disposition", "attachment;fileName=resume.docx");
