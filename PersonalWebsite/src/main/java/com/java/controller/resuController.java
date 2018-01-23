@@ -14,10 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/resu")
 public class resuController {
 	
-	@RequestMapping(value="/sendMail")
-	public void sendMail(){
-		
-	}
 	
 	@RequestMapping(value="/downFile")
 	public void downFile(HttpServletRequest request,HttpServletResponse response){

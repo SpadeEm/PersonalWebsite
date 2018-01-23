@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      <ul class="nav navbar-nav">
 	        <li ><a href="../note/getAllNotes.do" class="glyphicon glyphicon-book">学习笔记 <span class="sr-only">(current)</span></a></li>
 	        <li><a href="../photo/getAllAlbums.do" class="glyphicon glyphicon-picture">相册</a></li>
-	        <li><a href="<%=basePath%>/resume.jsp" class="glyphicon glyphicon-file">link</a></li>
+	        <li><a href="<%=basePath%>/resume.jsp" class="glyphicon glyphicon-file">简历</a></li>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->

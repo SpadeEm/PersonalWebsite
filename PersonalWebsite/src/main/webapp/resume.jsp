@@ -22,7 +22,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link href="resume/css/layout.min.css" rel="stylesheet" type="text/css"/>
 
 <!-- Favicon -->
-<link rel="shortcut icon" href="favicon.ico"/>
+<!-- <link rel="shortcut icon" href="favicon.ico"/> -->
+<link rel="shortcut icon" href="images/favicon.ico"/>
 <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 </head>
@@ -43,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <!-- Logo -->
                   <div class="logo">
                       <a class="logo-wrap" href="<%=basePath%>home.jsp">
-                          	<h3>返回主页</h3>
+                          	<h3>返回</h3>
                       </a>
                   </div>
                   <!-- End Logo -->
@@ -53,11 +54,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <div class="collapse navbar-collapse nav-collapse">
                   <div class="menu-container">
                       <ul class="nav navbar-nav navbar-nav-right">
-                          <li class="js_nav-item nav-item"><a class="nav-item-child nav-item-hover" href="#body">Home</a></li>
-                          <li class="js_nav-item nav-item"><a class="nav-item-child nav-item-hover" href="#about">About</a></li>
-                          <li class="js_nav-item nav-item"><a class="nav-item-child nav-item-hover" href="#experience">Experience</a></li>
-                          <li class="js_nav-item nav-item"><a class="nav-item-child nav-item-hover" href="#work">Work</a></li>
-                          <li class="js_nav-item nav-item"><a class="nav-item-child nav-item-hover" href="#contact">Contact</a></li>
+                          <li class="js_nav-item nav-item"><a class="nav-item-child nav-item-hover" href="#body">主页</a></li>
+                          <li class="js_nav-item nav-item"><a class="nav-item-child nav-item-hover" href="#about">自我介绍</a></li>
+                          <li class="js_nav-item nav-item"><a class="nav-item-child nav-item-hover" href="#experience">IT技能</a></li>
+                          <li class="js_nav-item nav-item"><a class="nav-item-child nav-item-hover" href="#work">项目经验</a></li>
+                          <li class="js_nav-item nav-item"><a class="nav-item-child nav-item-hover" href="#contact">联系方式</a></li>
                       </ul>
                   </div>
               </div>
@@ -69,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <!--========== END HEADER ==========-->
 
   <!--========== SLIDER ==========-->
-  <div class="promo-block parallax-window" data-parallax="scroll" data-image-src="img/1920x1080/01.jpg">
+  <div class="promo-block parallax-window" data-parallax="scroll" data-image-src="img/1920x1080/03.jpg">
       <div class="container">
           <div class="row">
               <div class="col-sm-6">
@@ -77,13 +78,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <h1 class="promo-block-title">朱勇超 </h1>
                       <p class="promo-block-text">JAVA开发工程师</p>
                   </div>
-                  <ul class="list-inline">
+                  <!-- <ul class="list-inline">
                       <li><a href="#" class="social-icons"><i class="icon-social-facebook"></i></a></li>
                       <li><a href="#" class="social-icons"><i class="icon-social-twitter"></i></a></li>
                       <li><a href="#" class="social-icons"><i class="icon-social-dribbble"></i></a></li>
                       <li><a href="#" class="social-icons"><i class="icon-social-behance"></i></a></li>
                       <li><a href="#" class="social-icons"><i class="icon-social-linkedin"></i></a></li>
-                  </ul>
+                  </ul> -->
               </div>
           </div>
           <!--// end row -->
@@ -105,7 +106,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <div class="col-sm-8 col-sm-offset-1">
                   <div class="margin-b-60">
                       <p>我是朱勇超，于2017.6月毕业于重庆邮电大学，软件工程专业。主要从事JAVAWEB后台的开发工作。</p>
-                      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                      <p>熟练掌握的JAVA基础，拥有良好的代码规范和创新精神以及对新技术的探索精神。能够在团队内进行快速敏捷的开发。</p>
                   </div>
 
                   <!-- Progress Box -->
@@ -160,8 +161,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <div class="row">
                   <div class="col-sm-3 sm-margin-b-30">
                       <div class="text-right sm-text-left">
-                          <h2 class="margin-b-0">Experience</h2>
-                          <p>Batman would be jealous.</p>
+                          <h2 class="margin-b-0">IT技能</h2>
+                          <p>我会什么?</p>
                       </div>
                   </div>
                   <div class="col-sm-8 col-sm-offset-1">
@@ -172,10 +173,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                       <i class="service-icon icon-chemistry"></i>
                                   </div>
                                   <div class="service-info">
-                                      <h3>HTML5/CSS3</h3>
-                                      <p class="margin-b-5">Lorem ipsum dolor amet consectetur ut consequat siad esqudiat dolor</p>
+                                      <h3>前端</h3>
+                                      <p class="margin-b-5">熟练掌握jQuery，css，bootstrap框架。能够灵活运用ajax进行前后台数据交互</p>
                                   </div>
-                                  <a href="#" class="content-wrapper-link"></a>    
+                                  <!-- <a href="#" class="content-wrapper-link"></a>  -->   
                               </div>
                           </div>
                           <div class="col-md-4 md-margin-b-4">
@@ -184,10 +185,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                       <i class="service-icon color-white icon-screen-tablet"></i>
                                   </div>
                                   <div class="service-info">
-                                      <h3 class="color-white">Photoshop</h3>
-                                      <p class="color-white margin-b-5">Lorem ipsum dolor amet consectetur ut consequat siad esqudiat dolor</p>
+                                      <h3 class="color-white">后台</h3>
+                                      <p class="color-white margin-b-5">能够运用SSM框架进行快速的开发，掌握mysql,oracle数据库，tomcat服务器。熟悉Linux，能够在Linux系统下进行软件的安装及web项目的部署</p>
                                   </div>
-                                  <a href="#" class="content-wrapper-link"></a>    
+                                  <!-- <a href="" class="content-wrapper-link"></a> -->    
                               </div>
                           </div>
                           <div class="col-md-4">
@@ -196,10 +197,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                       <i class="service-icon icon-badge"></i>
                                   </div>
                                   <div class="service-info">
-                                      <h3>Front-end</h3>
-                                      <p class="margin-b-5">Lorem ipsum dolor amet consectetur ut consequat siad esqudiat dolor</p>
+                                      <h3>工具</h3>
+                                      <p class="margin-b-5">能够熟练运用Eclipse,Notepad++等开发工具，SVN,GIT等版本控制工具</p>
                                   </div>
-                                  <a href="#" class="content-wrapper-link"></a>    
+                                  <!-- <a href="" class="content-wrapper-link"></a>  -->   
                               </div>
                           </div>
                       </div>
@@ -218,7 +219,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <div class="row">
               <div class="col-sm-3 sm-margin-b-30">
                   <div class="text-right sm-text-left">
-                      <h2 class="margin-b-0">工作经验</h2>
+                      <h2 class="margin-b-0">项目经验</h2>
                       <p>做过的项目</p>
                   </div>
               </div>
@@ -322,8 +323,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                       <div class="row">
                                           <div class="col-sm-12 work-popup-content-divider sm-margin-b-20">
                                               <div class="margin-t-10 sm-margin-t-0">
-                                                  <p>该系统是用于加强税务人员对核价系统数据的监管，以及方便软件公司人员对数据的处理。使得评估公司和地方税务局的人员能方便的提交审核，软件公司人员能快捷的接受数据。 1、用spring，springmvc，hibernate进行项目开发 。2、用EXTJS,jquery进行前台开发 。3、台使用oracle关系数据库 4、用MD5来保持密码一致性 </p>
-                                                  <p>本人在该项目中主要任务：1、据上传:主要用于评估公司和地税局上传数据以及附件，包括数据的上传提交，以及上传之后还未提交数据的删除。2、据审核:由软件公司审核已经提交的数据包括，根据地区，标题，时间查询数据，查看数据具体信息，下载附件，审核 。3、据复审:由软件公司进行对已经审核的数据进行数据的复审 。 4、据查询:查询录入的都有数据包括已经提交，审核的，和已经通过的。5.证明管理:对已经审核的数据开具证明，包括新建证明，查询证明，下载证明。</p>
+                                                  <p>该系统是用于加强税务人员对核价系统数据的监管，以及方便软件公司人员对数据的处理。使得评估公司和地方税务局的人员能方便的提交审核，软件公司人员能快捷的接受数据。 1、侍弄用spring，springmvc，hibernate进行项目开发 。2、用EXTJS,jquery进行前台开发 。3、后台使用oracle关系数据库 4、用MD5来保持密码一致性 </p>
+                                                  <p>本人在该项目中主要任务：1、数据上传:主要用于评估公司和地税局上传数据以及附件，包括数据的上传提交，以及上传之后还未提交数据的删除。2、数据审核:由软件公司审核已经提交的数据包括，根据地区，标题，时间查询数据，查看数据具体信息，下载附件，审核 。3、数据复审:由软件公司进行对已经审核的数据进行数据的复审 。 4、据查询:查询录入的都有数据包括已经提交，审核的，和已经通过的。5.证明管理:对已经审核的数据开具证明，包括新建证明，查询证明，下载证明。</p>
                                                   <!-- <ul class="list-inline work-popup-tag">
                                                       <li class="work-popup-tag-item"><a class="work-popup-tag-link" href="#">Design,</a></li>
                                                       <li class="work-popup-tag-item"><a class="work-popup-tag-link" href="#">Coding,</a></li>
@@ -477,7 +478,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <div class="row">
               <div class="col-xs-6">
                   <!-- <img class="footer-logo" src="img/logo-dark.png" alt="Aircv Logo"> -->
-                  <a href="../resu/downFile.do"><h4>下载</h4></a>
+                  <a href="../resu/downFile.do"><h4>下载简历</h4></a>
               </div>
               <div class="col-xs-6 text-right sm-text-left">
                   <!-- <p class="margin-b-0">More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p> -->
@@ -489,7 +490,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <!--========== END FOOTER ==========-->
 
   <!-- Back To Top -->
-  <a href="javascript:void(0);" class="js-back-to-top back-to-top">Top</a>
+  <a href="javascript:void(0);" class="js-back-to-top back-to-top">TOP</a>
 
   <!-- JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
   <!-- CORE PLUGINS -->
