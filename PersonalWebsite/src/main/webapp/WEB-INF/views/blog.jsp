@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      <ul class="nav navbar-nav">
 	        <li ><a href="../note/getAllNotes.do" class="glyphicon glyphicon-book">学习笔记 <span class="sr-only">(current)</span></a></li>
 	        <li><a href="../photo/getAllAlbums.do" class="glyphicon glyphicon-picture">相册</a></li>
-	        <li><a href="<%=basePath%>/resume.jsp" class="glyphicon glyphicon-file">简历</a></li>
+	        <li><a href="<%=basePath%>/resume.jsp" class="glyphicon glyphicon-file">resume</a></li>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
@@ -99,7 +99,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div>
 			<!-- 内容显示 -->
-			<div class="col-md-8" border="1">
+			<div class="col-md-8" border="1" style="background-color: #FFFFFF">
 				<%-- <div class="tab-content">
 				  <c:forEach items="${PageInfo.list }" var="notes">  
 				  <div role="tabpanel" class="tab-pane" id="${notes.noteId}">

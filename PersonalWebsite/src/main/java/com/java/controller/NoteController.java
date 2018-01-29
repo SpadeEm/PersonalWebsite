@@ -139,8 +139,7 @@ public class NoteController {
 
         }catch(Exception ex){
             ex.printStackTrace();
-        }
-        finally{
+        }finally{
             if(fin != null){
             	fin.close();
             }

@@ -2,19 +2,25 @@ package com.java.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.java.util.MailUtil;
 
 @Controller
 @RequestMapping("/resu")
 public class resuController {
 	
-	
+	//resume下载
 	@RequestMapping(value="/downFile")
 	public void downFile(HttpServletRequest request,HttpServletResponse response){
 		//windows路径
@@ -43,5 +49,21 @@ public class resuController {
 			e.printStackTrace();
 		}
 	    
+	}
+	
+	//发送邮件
+	@RequestMapping(value="/sendMail")
+	@ResponseBody
+	public String sendMail(){
+		try {
+			MailUtil.sendMail();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

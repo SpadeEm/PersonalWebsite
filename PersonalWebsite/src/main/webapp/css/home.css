@@ -21,3 +21,10 @@
 	width: 80px;
 	height: 40px;
 }
+
+.footer{
+	height:30%;
+	background-color: #0F0F0F;
+	color:#FFFFFF;
+	text-align: center;
+}

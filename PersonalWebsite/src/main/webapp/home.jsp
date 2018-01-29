@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <ul class="nav navbar-nav">
         <li ><a href="<%=basePath%>/note/getAllNotes.do" class="glyphicon glyphicon-book">学习笔记 <span class="sr-only">(current)</span></a></li>
         <li><a href="<%=basePath%>/photo/getAllAlbums.do" class="glyphicon glyphicon-picture">相册</a></li>
-        <li><a href="<%=basePath%>/resume.jsp" class="glyphicon glyphicon-file">简历</a></li>
+        <li><a href="<%=basePath%>/resume.jsp" class="glyphicon glyphicon-file">resume</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
@@ -114,6 +114,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
   </div>
 </div>
+<footer class="footer foot-wrap">
+	<div class="container">
+		<p>如果你对网站有什么建议，可以联系我</p>
+		<p><a href="" id="sendMail">发邮件给我</a></p>
+	</div>
+</footer>
 </body>
 <script type="text/javascript">
 $(function(){
@@ -175,6 +181,19 @@ $(function(){
 			error:function(){
 				 alert("注销失败");
 			 }
+		});
+	});
+	$("#sendMail").click(function(){
+		$.ajax({
+			url:'<%=basePath%>/resu/sendMail.do',
+			dataType:'json',
+			type:'post',
+			success:function(){
+				alert("发送成功");
+			},
+			error:function(){
+				alert("发送失败");
+			}	
 		});
 	});
 });
