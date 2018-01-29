@@ -117,9 +117,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <footer class="footer foot-wrap">
 	<div class="container">
 		<p>如果你对网站有什么建议，可以联系我</p>
-		<p><a href="" id="sendMail">发邮件给我</a></p>
+		<p><a href="" data-toggle="modal"  data-target="#mailModal" id="sendMail">发邮件给我</a></p>
 	</div>
 </footer>
+<!-- 创建邮件model -->
+<div class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="noteTitle">创建邮件</h4>
+      </div>
+      <div class="modal-body">
+      	
+       	<div class="input-group">
+		  <span class="input-group-addon">发件人邮箱</span>
+		  <input type="text" class="form-control" placeholder="" id="sendName">
+		</div>
+		<div class="input-group">
+		  <span class="input-group-addon">主题</span>
+		  <input type="text" class="form-control" placeholder="" id="sentTitle">
+		</div>
+		<div>
+			<form>
+	            <textarea id="editBox">
+	            </textarea>
+	        </form>
+	    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
+        <button type="button" class="btn btn-primary"  id="sendMail">发送</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 <script type="text/javascript">
 $(function(){
@@ -188,12 +220,9 @@ $(function(){
 			url:'<%=basePath%>/resu/sendMail.do',
 			dataType:'json',
 			type:'post',
-			success:function(){
+			success:function(data){
 				alert("发送成功");
-			},
-			error:function(){
-				alert("发送失败");
-			}	
+			}
 		});
 	});
 });
