@@ -133,6 +133,7 @@ public class PhotoController {
   		for (String rPath:ListRealPath) {
   			File file = new File(rPath);
   			file.delete();
+  			System.out.println("true");
 		}
   		map.put("result", result);
   		return map;

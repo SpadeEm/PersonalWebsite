@@ -57,10 +57,10 @@ public class resuController {
 	//发送邮件
 	@RequestMapping(value="/sendMail")
 	@ResponseBody
-	public String sendMail(){
-		
+	public Map<String,Object> sendMail(@RequestParam("sendName") String sendName,@RequestParam("sentTitle") String sentTitle,@RequestParam("content") String content){
+		Map<String,Object> map = new HashMap<String,Object>();
 		try {
-			MailUtil.sendMail();
+			MailUtil.sendMail(sendName,sentTitle,content);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (MessagingException e) {
@@ -68,6 +68,6 @@ public class resuController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return map;
 	}
 }

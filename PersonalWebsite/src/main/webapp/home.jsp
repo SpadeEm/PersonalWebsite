@@ -48,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li class="operate-btn"><a href="#" class="glyphicon glyphicon-list" data-toggle="modal"  data-target="#loginModal" id="userLogin">登录</a></li>
-            <li><a href="https://github.com/SpadeEm" class="operate-btn"><img alt="" src="images/github.png" class="github responsive">github</a></li>
+            <li><a href="https://github.com/SpadeEm" class="glyphicon glyphicon-globe operate-btn">github</a></li>
             <li><a href="#" class="operate-btn glyphicon glyphicon-off" style="display: none" id="logout">注销</a></li>
           </ul>
         </li>
@@ -114,14 +114,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
   </div>
 </div>
-<footer class="footer foot-wrap">
+<div class="footer foot-wrap">
 	<div class="container">
 		<p>如果你对网站有什么建议，可以联系我</p>
-		<p><a href="" data-toggle="modal"  data-target="#mailModal" id="sendMail">发邮件给我</a></p>
+		<p><a href="" data-toggle="modal"  data-target="#mailModal" >发邮件给我</a></p>
 	</div>
-</footer>
+</div>
 <!-- 创建邮件model -->
-<div class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade"   id="mailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -138,10 +138,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  <span class="input-group-addon">主题</span>
 		  <input type="text" class="form-control" placeholder="" id="sentTitle">
 		</div>
-		<div>
+		<div id ="editB">
 			<form>
-	            <textarea id="editBox">
-	            </textarea>
+	            <textarea class="form-control" id="editBox" rows="10" cols="78"></textarea>
 	        </form>
 	    </div>
       </div>
@@ -215,15 +214,26 @@ $(function(){
 			 }
 		});
 	});
+	//邮件发送
 	$("#sendMail").click(function(){
 		$.ajax({
 			url:'<%=basePath%>/resu/sendMail.do',
+			data:{
+				sendName:$("#sendName").val(),
+				sentTitle:$("#sentTitle").val(),
+				content:$("#editBox").val()
+			},
 			dataType:'json',
 			type:'post',
 			success:function(data){
 				alert("发送成功");
-			}
+				$("#mailModal").modal('hide');
+			},
+			error:function(){
+				 alert("发送失败,请填写完整邮件信息");
+			 }
 		});
+
 	});
 });
 </script>

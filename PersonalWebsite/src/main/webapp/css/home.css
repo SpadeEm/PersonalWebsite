@@ -23,13 +23,14 @@
 }
 
 .footer{
+	padding-top:20px;
 	height:30%;
 	background-color: #0F0F0F;
 	color:#FFFFFF;
 	text-align: center;
 }
 
-#editBox{
+/* #editBox{
 	width: 100%;
 	height: 200px;
-}
+} */

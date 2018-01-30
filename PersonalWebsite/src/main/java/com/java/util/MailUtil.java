@@ -25,7 +25,7 @@ public class MailUtil {
     // 收件人邮箱（替换为自己知道的有效邮箱）
     public static String receiveMailAccount = "965702794@qq.com";*/
     //发送邮件方法
-    public static void sendMail() throws MessagingException, IOException{
+    public static void sendMail(String sendName,String sentTitle,String content) throws MessagingException, IOException{
     	Properties properties = new Properties();
         // 使用ClassLoader加载mail.properties配置文件生成对应的输入流
         InputStream in = MailUtil.class.getClassLoader().getResourceAsStream("mail.properties");
@@ -55,7 +55,7 @@ public class MailUtil {
         session.setDebug(true);                                 // 设置为debug模式, 可以查看详细的发送 log
 
         // 3. 创建一封邮件
-        MimeMessage message = createMimeMessage(session, properties.getProperty("myEmailAccount"), properties.getProperty("receiveMailAccount"));
+        MimeMessage message = createMimeMessage(session, properties.getProperty("myEmailAccount"), properties.getProperty("receiveMailAccount"),sendName,sentTitle,content);
 
         // 4. 根据 Session 获取邮件传输对象
         Transport transport = session.getTransport();
@@ -82,24 +82,24 @@ public class MailUtil {
         // 7. 关闭连接
         transport.close();
     }
-	private static MimeMessage createMimeMessage(Session session, String sendMail, String receiveMail) throws UnsupportedEncodingException, MessagingException {
+	private static MimeMessage createMimeMessage(Session session, String sendMail, String receiveMail,String sendName,String sentTitle,String content) throws UnsupportedEncodingException, MessagingException {
 		// 1. 创建一封邮件
         MimeMessage message = new MimeMessage(session);
 
         // 2. From: 发件人（昵称有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改昵称）
-        message.setFrom(new InternetAddress(sendMail, "测试", "UTF-8"));
+        message.setFrom(new InternetAddress(sendMail, sendName, "UTF-8"));
         
         //给自己抄送一份，不然会报554错误
 //        message.setRecipient(MimeMessage.RecipientType.CC, new InternetAddress(sendMail, "XX用户", "UTF-8"));
         
         // 3. To: 收件人（可以增加多个收件人、抄送、密送）
-        message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(receiveMail, "XX用户", "UTF-8"));
+        message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(receiveMail, "烟雨", "UTF-8"));
 
         // 4. Subject: 邮件主题（标题有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改标题）
-        message.setSubject("测试", "UTF-8");
+        message.setSubject(sentTitle, "UTF-8");
 
         // 5. Content: 邮件正文（可以使用html标签）（内容有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改发送内容）
-        message.setContent("我是一封测试邮件", "text/html;charset=UTF-8");
+        message.setContent(content, "text/html;charset=UTF-8");
 
         // 6. 设置发件时间
         message.setSentDate(new Date());

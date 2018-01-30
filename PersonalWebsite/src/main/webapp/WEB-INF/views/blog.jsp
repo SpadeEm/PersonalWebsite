@@ -219,6 +219,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	$("#showNote").hide();
     	//清空modal中的内容
     	var a;
+    	var str
     	//验证是否登录
     	$.ajax({
     		url:'../user/LoginCheck.do',
@@ -283,8 +284,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     				$("#noteHead").html(data.result.noteTitle);    				
     				$("#createTime").html("创建于"+data.createTime);
     				$("#content").html(data.result.noteContent);
-    				var str =$("#content").val();
-    	    		$("#down").attr('href','../note/downNote.do?noteId='+18+'&noteContent='+$("#content").val()+'');
+    				str =$("#content").text();
+    	    		$("#down").attr('href','../note/downNote.do?noteContent='+str+'');
     			},
     			error:function(){
     			}
@@ -355,12 +356,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	});
     	//导出笔记文档
     	/* $("#down").click(function(){
-    		$.get("../note/downNote.do",{noteId:a},function(data){
-    		    
-    		  });
+    		
     		$.ajax({
     			url:'../note/downNote.do',
-    			data:{noteId:a},
+    			data:{noteId:a,noteContent:str},
     			type:'get',
     			dataType:'json',
     			success:function(data){
@@ -370,7 +369,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     				alert("导出失败");
     			}
     		});
-    	}); */
+    	}); */ 
     	
   	}); 
 </script>

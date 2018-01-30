@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -93,16 +94,17 @@ public class NoteController {
 	
 	//导出笔记
 	@RequestMapping(value="/downNote")
-    public String downResumeDoc(@RequestParam("noteId")Integer noteId,@RequestParam("noteContent")String noteContent,
+    public String downResumeDoc(@RequestParam("noteContent")String noteContent,
     		HttpServletRequest request,HttpServletResponse response) 
             throws IOException{
         request.setCharacterEncoding("utf-8");
+//        Integer id = Integer.parseInt(noteId.substring(1));
         Map<String,Object> map = new HashMap<String,Object>();
 //        Integer id = Integer.parseInt(noteId.substring(1));
-        Note note = noteDao.getNoteById(noteId);
+        Note note = noteDao.getNoteById(18);
         //给map填充数据
-        String str = noteContent;
-        if(str.contains("<")||str.contains(">")||str.contains("&")){  
+
+        /*if(str.contains("<")||str.contains(">")||str.contains("&")){  
             str = str.replaceAll("&", "&amp;");  
             str = str.replaceAll("<", "&lt;");  
             str = str.replaceAll(">", "&gt;");  
@@ -110,7 +112,7 @@ public class NoteController {
             str = str.replace("\"", "&quot;"); // 替换双引号  
             str = str.replace("\t", "&nbsp;&nbsp;");// 替换跳格  
             str = str.replace(" ", "&nbsp;");// 替换空格  
-      }  
+      }*/  
         map.put("title", note.getNoteTitle());
         map.put("content", noteContent);
 
@@ -118,6 +120,7 @@ public class NoteController {
         //否则Freemarker的模板殷勤在处理时可能会因为找不到值而报错，这里暂时忽略这个步骤
         File file = null;
         InputStream fin = null;
+//        OutputStream out =null;
         ServletOutputStream out = null;
 
         try{
