@@ -128,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  		<a href="" class="glyphicon glyphicon-download-alt down" id="down" style="display: none">导出</a>
 					</div>
 					<div style="padding: 20px;">
-				 		<div id="content" class="content"></div>
+				 		<div id="content" class="content" name="content"></div>
 					</div>
 				</div>
 				
@@ -284,8 +284,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     				$("#noteHead").html(data.result.noteTitle);    				
     				$("#createTime").html("创建于"+data.createTime);
     				$("#content").html(data.result.noteContent);
+    				var noteTitle = $("#noteHead").text();
     				str =$("#content").text();
-    	    		$("#down").attr('href','../note/downNote.do?noteContent='+str+'');
+    	    		$("#down").attr('href','../note/downNote.do?noteTitle='+noteTitle+'&noteContent='+str+'');
     			},
     			error:function(){
     			}

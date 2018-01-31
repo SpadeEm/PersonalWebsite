@@ -94,14 +94,16 @@ public class NoteController {
 	
 	//导出笔记
 	@RequestMapping(value="/downNote")
-    public String downResumeDoc(@RequestParam("noteContent")String noteContent,
+    public String downResumeDoc(@RequestParam("noteTitle")String noteTitle,@RequestParam("noteContent")String noteContent,
     		HttpServletRequest request,HttpServletResponse response) 
             throws IOException{
         request.setCharacterEncoding("utf-8");
+//        String a = request.getParameter("noteContent");
+//        String b = request.getParameter("noteId");
 //        Integer id = Integer.parseInt(noteId.substring(1));
         Map<String,Object> map = new HashMap<String,Object>();
 //        Integer id = Integer.parseInt(noteId.substring(1));
-        Note note = noteDao.getNoteById(18);
+//        Note note = noteDao.getNoteById(id);
         //给map填充数据
 
         /*if(str.contains("<")||str.contains(">")||str.contains("&")){  
@@ -113,7 +115,7 @@ public class NoteController {
             str = str.replace("\t", "&nbsp;&nbsp;");// 替换跳格  
             str = str.replace(" ", "&nbsp;");// 替换空格  
       }*/  
-        map.put("title", note.getNoteTitle());
+        map.put("title", noteTitle);
         map.put("content", noteContent);
 
         //提示：在调用工具类生成Word文档之前应当检查所有字段是否完整
