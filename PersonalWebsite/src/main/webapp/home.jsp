@@ -41,14 +41,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <ul class="nav navbar-nav">
         <li ><a href="<%=basePath%>/note/getAllNotes.do" class="glyphicon glyphicon-book">学习笔记 <span class="sr-only">(current)</span></a></li>
         <li><a href="<%=basePath%>/photo/getAllAlbums.do" class="glyphicon glyphicon-picture">相册</a></li>
-        <li><a href="<%=basePath%>/resume.jsp" class="glyphicon glyphicon-file">简历</a></li>
+        <li><a href="<%=basePath%>/resume.jsp" class="glyphicon glyphicon-file">resume</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li class="operate-btn"><a href="#" class="glyphicon glyphicon-list" data-toggle="modal"  data-target="#loginModal" id="userLogin">登录</a></li>
-            <li><a href="https://github.com/SpadeEm" class="operate-btn"><img alt="" src="images/github.png" class="github responsive">github</a></li>
+            <li><a href="https://github.com/SpadeEm" class="glyphicon glyphicon-globe operate-btn">github</a></li>
             <li><a href="#" class="operate-btn glyphicon glyphicon-off" style="display: none" id="logout">注销</a></li>
           </ul>
         </li>
@@ -110,6 +110,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    		
 	    	</center>
 	    </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer foot-wrap">
+	<div class="container">
+		<p>如果你对网站有什么建议，可以联系我</p>
+		<p><a href="" data-toggle="modal"  data-target="#mailModal" >发邮件给我</a></p>
+	</div>
+</div>
+<!-- 创建邮件model -->
+<div class="modal fade"   id="mailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="noteTitle">创建邮件</h4>
+      </div>
+      <div class="modal-body">
+      	
+       	<div class="input-group">
+		  <span class="input-group-addon">发件人邮箱</span>
+		  <input type="text" class="form-control" placeholder="" id="sendName">
+		</div>
+		<div class="input-group">
+		  <span class="input-group-addon">主题</span>
+		  <input type="text" class="form-control" placeholder="" id="sentTitle">
+		</div>
+		<div id ="editB">
+			<form>
+	            <textarea class="form-control" id="editBox" rows="10" cols="78"></textarea>
+	        </form>
+	    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
+        <button type="button" class="btn btn-primary"  id="sendMail">发送</button>
       </div>
     </div>
   </div>
@@ -176,6 +213,27 @@ $(function(){
 				 alert("注销失败");
 			 }
 		});
+	});
+	//邮件发送
+	$("#sendMail").click(function(){
+		$.ajax({
+			url:'<%=basePath%>/resu/sendMail.do',
+			data:{
+				sendName:$("#sendName").val(),
+				sentTitle:$("#sentTitle").val(),
+				content:$("#editBox").val()
+			},
+			dataType:'json',
+			type:'post',
+			success:function(data){
+				alert("发送成功");
+				$("#mailModal").modal('hide');
+			},
+			error:function(){
+				 alert("发送失败,请填写完整邮件信息");
+			 }
+		});
+
 	});
 });
 </script>

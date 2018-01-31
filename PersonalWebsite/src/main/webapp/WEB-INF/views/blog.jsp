@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      <ul class="nav navbar-nav">
 	        <li ><a href="../note/getAllNotes.do" class="glyphicon glyphicon-book">学习笔记 <span class="sr-only">(current)</span></a></li>
 	        <li><a href="../photo/getAllAlbums.do" class="glyphicon glyphicon-picture">相册</a></li>
-	        <li><a href="<%=basePath%>/resume.jsp" class="glyphicon glyphicon-file">简历</a></li>
+	        <li><a href="<%=basePath%>/resume.jsp" class="glyphicon glyphicon-file">resume</a></li>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
@@ -99,7 +99,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div>
 			<!-- 内容显示 -->
-			<div class="col-md-8" border="1">
+			<div class="col-md-8" border="1" style="background-color: #FFFFFF">
 				<%-- <div class="tab-content">
 				  <c:forEach items="${PageInfo.list }" var="notes">  
 				  <div role="tabpanel" class="tab-pane" id="${notes.noteId}">
@@ -128,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  		<a href="" class="glyphicon glyphicon-download-alt down" id="down" style="display: none">导出</a>
 					</div>
 					<div style="padding: 20px;">
-				 		<div id="content" class="content"></div>
+				 		<div id="content" class="content" name="content"></div>
 					</div>
 				</div>
 				
@@ -219,6 +219,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	$("#showNote").hide();
     	//清空modal中的内容
     	var a;
+    	var str
     	//验证是否登录
     	$.ajax({
     		url:'../user/LoginCheck.do',
@@ -283,8 +284,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     				$("#noteHead").html(data.result.noteTitle);    				
     				$("#createTime").html("创建于"+data.createTime);
     				$("#content").html(data.result.noteContent);
-    				var str =$("#content").val();
-    	    		$("#down").attr('href','../note/downNote.do?noteId='+18+'&noteContent='+$("#content").val()+'');
+    				var noteTitle = $("#noteHead").text();
+    				str =$("#content").text();
+    	    		$("#down").attr('href','../note/downNote.do?noteTitle='+noteTitle+'&noteContent='+str+'');
     			},
     			error:function(){
     			}
@@ -355,12 +357,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	});
     	//导出笔记文档
     	/* $("#down").click(function(){
-    		$.get("../note/downNote.do",{noteId:a},function(data){
-    		    
-    		  });
+    		
     		$.ajax({
     			url:'../note/downNote.do',
-    			data:{noteId:a},
+    			data:{noteId:a,noteContent:str},
     			type:'get',
     			dataType:'json',
     			success:function(data){
@@ -370,7 +370,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     				alert("导出失败");
     			}
     		});
-    	}); */
+    	}); */ 
     	
   	}); 
 </script>

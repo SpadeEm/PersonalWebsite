@@ -41,3 +41,11 @@
 .showNoteContent{
 	overflow:auto;
 }
+#showNote{
+	background-color: #FFFFFF;
+}
+
+body{
+	background-color: #F5F5F5
+}
+
