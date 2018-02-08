@@ -17,10 +17,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="../css/blog.css">
 <link rel="stylesheet" type="text/css" href="../css/style.css">
+<link rel="stylesheet" type="text/css" href="../css/msg.css">
+<link rel="stylesheet" type="text/css" href="css/comment.css">
 <link rel="shortcut icon" href="../images/favicon.ico"/>
 <script type="text/javascript" src="../js/jquery-2.0.3.min.js"></script>
 <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="js/comment.js"></script>
+<script type="text/javascript" src="../js/msg.js"></script>
 </head>
 <body>
 <!-- 导航栏 -->
@@ -131,7 +135,83 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				 		<div id="content" class="content" name="content"></div>
 					</div>
 				</div>
-				
+				<!-- 评论区 -->
+				<div id="msgBox">
+				 	<h2>来 , 说说你在做什么 , 想什么</h2>
+					<div>
+						选择你的头像
+				        <p id="face">
+			            	<img src="../img/face1.gif" class="current" /><img src="../img/face2.gif" /><img src="../img/face3.gif" /><img src="../img/face4.gif" /><img src="../img/face5.gif" /><img src="../img/face6.gif" /><img src="../img/face7.gif" /><img src="../img/face8.gif" />
+			            </p>
+			        </div>
+				    <form>
+				        <div class="input-group">
+				            <input id="userName" class="form-control f-text"  placeholder="输入你的名字" value="" />
+				            <!-- <input id="userEmail" class="form-control f-text"  placeholder="输入你的邮箱" value="" /> --> 
+				        </div>
+				        <div><textarea id="conBox" class="f-text"></textarea></div>
+				        <div class="tr">
+				            <p>
+				                <span class="countTxt">还能输入</span><strong class="maxNum">140</strong><span>个字</span>
+				                <!-- <input id="sendBtn" type="button" class="btn btn-default" value="发表" title="快捷键 Ctrl+Enter" /> -->
+				                <button id="sendBtn" class="btn btn-default" title="快捷键 Ctrl+Enter">发表</button>
+				            </p>
+				        </div>
+				    </form>
+				    <div class="list">
+				        <h3><span>大家在说</span></h3>
+				        <ul id="commentList">
+				            <li>
+				                <div class="userPic"><img src="../img/face.gif" /></div>
+				                <div class="content">
+				                    <div class="userName"><a href="javascript:;">永不上线</a>:</div>
+				                    <div class="msgInfo">新增删除广播功能。</div>
+				                    <div class="times"><span>07月05日 15:14</span><a class="del" href="javascript:;">删除</a></div>
+				                </div>
+				            </li>
+				            <li>
+				                <div class="userPic"><img src="../img/face1.gif" /></div>
+				                <div class="content">
+				                    <div class="userName"><a href="javascript:;">永不上线</a>:</div>
+				                    <div class="msgInfo">新增Ctrl+Enter快捷键发送广播。</div>
+				                    <div class="times"><span>07月05日 12:20</span><a class="del" href="javascript:;">删除</a></div>
+				                </div>
+				            </li>
+				            <li>
+				                <div class="userPic"><img src="../img/face2.gif" /></div>
+				                <div class="content">
+				                    <div class="userName"><a href="javascript:;">永不上线</a>:</div>
+				                    <div class="msgInfo">新增选择头像功能。</div>
+				                    <div class="times"><span>07月05日 12:08</span><a class="del" href="javascript:;">删除</a></div>
+				                </div>
+				            </li>
+				            <li>
+				                <div class="userPic"><img src="../img/face3.gif" /></div>
+				                <div class="content">
+				                    <div class="userName"><a href="javascript:;">永不上线</a>:</div>
+				                    <div class="msgInfo">增加了记录广播时间的功能。</div>
+				                    <div class="times"><span>07月04日 16:55</span><a class="del" href="javascript:;">删除</a></div>
+				                </div>
+				            </li>
+				            <li>
+				                <div class="userPic"><img src="../img/face4.gif" /></div>
+				                <div class="content">
+				                    <div class="userName"><a href="javascript:;">永不上线</a>:</div>
+				                    <div class="msgInfo">增加了输入字符检测功能，英文/半角为半个字符，汉字/全角为一个字符。</div>
+				                    <div class="times"><span>07月04日 08:30</span><a class="del" href="javascript:;">删除</a></div>
+				                </div>
+				            </li>
+				            <li>
+				    	        <div class="userPic"><img src="../img/face5.gif" /></div>
+				                <div class="content">
+				                    <div class="userName"><a href="javascript:;">永不上线</a>:</div>
+				                    <div class="msgInfo">仿腾讯微博效果，欢迎大家测试！</div>
+				                    <div class="times"><span>07月03日 20:19</span><a class="del" href="javascript:;">删除</a></div>
+				                </div>
+				            </li>
+				        </ul>
+				    </div>	
+				</div>			
 			</div>
 		</div>
 	</div>
@@ -217,6 +297,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	//初始化tooltip
     	$('[data-toggle="tooltip"]').tooltip();
     	$("#showNote").hide();
+    	$("#msgBox").hide();
     	//清空modal中的内容
     	var a;
     	var str
@@ -274,7 +355,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		//CKEDITOR.instances.noteContent.setData('');
     		a =$(this).attr("href");
     		$("#showNote").show();
+    		$("#msgBox").show();
     		$("#showNoteContent").remove();
+    		//显示笔记内容
     		$.ajax({
     			url:'../note/getNoteById.do',
     			data:{noteId:a},
@@ -290,7 +373,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			},
     			error:function(){
     			}
-    		})
+    		});
+    		//显示评论
+        	$.ajax({
+        		url:'../comment/showCommentByNote.do',
+        		type:'post',
+        		data:{noteId:a},
+        		dataType:'json',
+        		success:function(data){
+        			for (var i = 0; i < data.result.length; i++) {
+        				$('#commentList').append("<li><div class='userPic'><img src=" + data.result[i].commentPic + "></div><div class='content'><div class='userName'>" + data.result[i].commentName + ":</div><div class='msgInfo'>" + data.result[i].commentContent + "</div><div class='times'><span>" + data.result[i].commentTime + "</span><a class='del'>删除</a></span></div> </div></li>");
+        				//$('#commentList').append("<div class='content'><div class='userName'>" + data.result[i].commentName + ":</div><div class='msgInfo'>" + data.result[i].commentContent + "</div><div class='times'><span>" + data.result[i].commentTime + "</span><a class='del' href="javascript:;">zz</a></div> </div>");
+        			}
+        		},
+        		error:function(){
+        			alert("读取失败");
+        		}
+        	});
    		});
     	//编辑界面显示
     	$(".editNote").click(function(){

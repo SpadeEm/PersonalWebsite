@@ -2,7 +2,10 @@ package com.java.test;
 
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,8 +15,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.java.dao.AlbumDao;
+import com.java.dao.CommentDao;
 import com.java.dao.NoteDao;
 import com.java.entity.Album;
+import com.java.entity.Comment;
 import com.java.entity.Note;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,6 +28,8 @@ public class NoteJunitTest {
 	private AlbumDao albumDao;
 	@Autowired
 	private NoteDao noteDao;
+	@Autowired
+	private CommentDao commentDao;
 
 	@Before
 	public void setUp() throws Exception {
@@ -30,11 +37,11 @@ public class NoteJunitTest {
 
 	@Test
 	public void test() {
-		List<Note> list = noteDao.getAllNotes();
-		for (Note n:list) {
-			System.out.println(n.getNoteId());
-		}
-		System.out.println("success");
+		Map<String,Object> map = new HashMap<String,Object>();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		List<Comment> list = commentDao.getCommentByNoteId(18);
+		map.put("result", list);
+		System.out.println(map);
 	}
 
 }
