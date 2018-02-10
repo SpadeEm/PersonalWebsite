@@ -220,5 +220,20 @@ $(function(){
 	$("#commentList li").mouseout(function(e){
 		$(this).find(".del").css("display","none");
 	});
+	//保存评论
+	$("#sendBtn").click(function(){
+		$.ajax({
+			url:'',
+			data:{},
+			type:'post',
+			dataType:'json',
+			success:function(data){
+				
+			},
+			error:function(){
+				
+			}
+		});
+	});
 	
 }); 
