@@ -1,6 +1,7 @@
 package com.java.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ import com.java.entity.Comment;
 public class CommentController {
 	@Autowired
 	private CommentDao commentDao;
-	
+	//显示评论
 	@RequestMapping(value="/showCommentByNote", method={RequestMethod.POST})
 	@ResponseBody
 	public Map<String,Object> showCommentByNote(@RequestParam("noteId") String noteId){
@@ -31,9 +32,23 @@ public class CommentController {
 		map.put("result", list);
 		return map;
 	}
-	
-	@RequestMapping("/addComment")
-	public void addComment(){
-		
+	//添加评论
+	@RequestMapping(value="/addComment", method={RequestMethod.POST})
+	@ResponseBody
+	public Map<String,Object> addComment(@RequestParam("commentName")String commentName,
+			@RequestParam("commentContent")String commentContent,@RequestParam("commentPic")String commentPic,
+			@RequestParam("nId") String noteId){
+		Map<String,Object> map = new HashMap<String,Object>();
+		Integer id = Integer.parseInt(noteId.substring(1));
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Calendar c = Calendar.getInstance();
+		String dateString = formatter.format(c.getTime());
+		boolean result = commentDao.addComment(commentName, commentContent, commentPic, dateString, id);
+		map.put("result", result);
+		return map;
 	}
+	//删除评论
+	/*public void deleteCommentById(@RequestParam("commentId")Integer commentId){
+		
+	}*/
 }

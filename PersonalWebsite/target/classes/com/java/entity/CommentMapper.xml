@@ -21,5 +21,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getCommentByNoteId" parameterType="Integer" resultMap="commentResultMap">
 		select * from comment where NOTE_ID=#{noteId}
 	</select>
+	
+	<insert id="addComment" >
+		insert into comment(CMT_NAME,CMT_PIC,CMT_CONTENT,CMT_TIME,NOTE_ID)values(#{commentName},
+		#{commentPic},#{commentContent},#{createTime},#{noteId})
+	</insert>
+	
+	<delete id="deleteCommentById" parameterType="Integer">
+		delete from comment where CMT_ID = #{commentId}
+	</delete>
 
 </mapper>

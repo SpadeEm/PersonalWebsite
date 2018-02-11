@@ -19,3 +19,5 @@
 #face img.hover,#face img.current{width:28px;height:28px;border:1px solid #f60;opacity:1;filter:alpha(opacity=100);}
 ul{list-style-type:none;}
 /* .del{width:10px;height: 5px;} */
+.commentLi{padding-top: 10px;padding-bottom: 10px;}
+/* #msg{border:2px solid #dee4e7} */

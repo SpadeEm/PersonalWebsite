@@ -18,7 +18,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="../css/blog.css">
 <link rel="stylesheet" type="text/css" href="../css/style.css">
 <link rel="stylesheet" type="text/css" href="../css/msg.css">
-<link rel="stylesheet" type="text/css" href="css/comment.css">
 <link rel="shortcut icon" href="../images/favicon.ico"/>
 <script type="text/javascript" src="../js/jquery-2.0.3.min.js"></script>
 <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
@@ -136,16 +135,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 				<!-- 评论区 -->
 				<div id="msgBox">
-				 	<h2>来 , 说说你在做什么 , 想什么</h2>
+				 	<h4>给我留言：</h4>
 					<div>
 						选择你的头像
 				        <p id="face">
 			            	<img src="../img/face1.gif" class="current" /><img src="../img/face2.gif" /><img src="../img/face3.gif" /><img src="../img/face4.gif" /><img src="../img/face5.gif" /><img src="../img/face6.gif" /><img src="../img/face7.gif" /><img src="../img/face8.gif" />
 			            </p>
 			        </div>
-				    <form>
+				    <div>
 				        <div class="input-group">
-				            <input id="userName" class="form-control f-text"  placeholder="输入你的名字" value="" />
+				            <input id="userName" class="form-control f-text"  placeholder="输入你的邮箱" value="" />
 				            <!-- <input id="userEmail" class="form-control f-text"  placeholder="输入你的邮箱" value="" /> --> 
 				        </div>
 				        <div><textarea id="conBox" class="f-text"></textarea></div>
@@ -153,53 +152,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				            <p>
 				                <span class="countTxt">还能输入</span><strong class="maxNum">140</strong><span>个字</span>
 				                <!-- <input id="sendBtn" type="button" class="btn btn-default" value="发表" title="快捷键 Ctrl+Enter" /> -->
-				                <button id="sendBtn" class="btn btn-default" title="快捷键 Ctrl+Enter">发表</button>
+				                <button id="sendBtn" class="btn btn-default">发表</button>
 				            </p>
 				        </div>
-				    </form>
+				    </div>
 				    <div class="list">
 				        <h3><span>大家在说</span></h3>
 				        <ul id="commentList">
-				            <li>
-				                <div class="userPic"><img src="../img/face.gif" /></div>
-				                <div class="content">
-				                    <div class="userName"><a href="javascript:;">永不上线</a>:</div>
-				                    <div class="msgInfo">新增删除广播功能。</div>
-				                    <div class="times"><span>07月05日 15:14</span><a class="del" href="javascript:;">删除</a></div>
-				                </div>
-				            </li>
-				            <li>
-				                <div class="userPic"><img src="../img/face1.gif" /></div>
-				                <div class="content">
-				                    <div class="userName"><a href="javascript:;">永不上线</a>:</div>
-				                    <div class="msgInfo">新增Ctrl+Enter快捷键发送广播。</div>
-				                    <div class="times"><span>07月05日 12:20</span><a class="del" href="javascript:;">删除</a></div>
-				                </div>
-				            </li>
-				            <li>
-				                <div class="userPic"><img src="../img/face2.gif" /></div>
-				                <div class="content">
-				                    <div class="userName"><a href="javascript:;">永不上线</a>:</div>
-				                    <div class="msgInfo">新增选择头像功能。</div>
-				                    <div class="times"><span>07月05日 12:08</span><a class="del" href="javascript:;">删除</a></div>
-				                </div>
-				            </li>
-				            <li>
-				                <div class="userPic"><img src="../img/face3.gif" /></div>
-				                <div class="content">
-				                    <div class="userName"><a href="javascript:;">永不上线</a>:</div>
-				                    <div class="msgInfo">增加了记录广播时间的功能。</div>
-				                    <div class="times"><span>07月04日 16:55</span><a class="del" href="javascript:;">删除</a></div>
-				                </div>
-				            </li>
-				            <li>
-				                <div class="userPic"><img src="../img/face4.gif" /></div>
-				                <div class="content">
-				                    <div class="userName"><a href="javascript:;">永不上线</a>:</div>
-				                    <div class="msgInfo">增加了输入字符检测功能，英文/半角为半个字符，汉字/全角为一个字符。</div>
-				                    <div class="times"><span>07月04日 08:30</span><a class="del" href="javascript:;">删除</a></div>
-				                </div>
-				            </li>
 				            <li>
 				    	        <div class="userPic"><img src="../img/face5.gif" /></div>
 				                <div class="content">

@@ -1,13 +1,11 @@
 package com.java.entity;
 
-import java.util.Date;
-
 public class Comment {
 	private int commentId;
 	private String commentName;
 	private String commentContent;
 	private String commentPic;
-	private Date commentTime;
+	private String commentTime;
 	private Note note;
 	public int getCommentId() {
 		return commentId;
@@ -39,10 +37,10 @@ public class Comment {
 	public void setCommentPic(String commentPic) {
 		this.commentPic = commentPic;
 	}
-	public Date getCommentTime() {
+	public String getCommentTime() {
 		return commentTime;
 	}
-	public void setCommentTime(Date commentTime) {
+	public void setCommentTime(String commentTime) {
 		this.commentTime = commentTime;
 	}
 	

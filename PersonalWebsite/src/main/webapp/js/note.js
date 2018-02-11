@@ -67,6 +67,9 @@ $(function(){
 		$("#showNote").show();
 		$("#msgBox").show();
 		$("#showNoteContent").remove();
+		$(".commentLi").remove();
+		$("#userName").val('');
+		$("#conBox").val('');
 		//显示笔记内容
 		$.ajax({
 			url:'../note/getNoteById.do',
@@ -85,21 +88,7 @@ $(function(){
 			}
 		});
 		//显示评论
-    	$.ajax({
-    		url:'../comment/showCommentByNote.do',
-    		type:'post',
-    		data:{noteId:a},
-    		dataType:'json',
-    		success:function(data){
-    			for (var i = 0; i < data.result.length; i++) {
-    				$('#commentList').append("<li><div class='userPic'><img src=" + data.result[i].commentPic + "></div><div class='content'><div class='userName'>" + data.result[i].commentName + ":</div><div class='msgInfo'>" + data.result[i].commentContent + "</div><div class='times'><span>" + data.result[i].commentTime + "</span><a class='del'>删除</a></span></div> </div></li>");
-    				//$('#commentList').append("<div class='content'><div class='userName'>" + data.result[i].commentName + ":</div><div class='msgInfo'>" + data.result[i].commentContent + "</div><div class='times'><span>" + data.result[i].commentTime + "</span><a class='del' href="javascript:;">zz</a></div> </div>");
-    			}
-    		},
-    		error:function(){
-    			alert("读取失败");
-    		}
-    	});
+		showComment(a);
 	});
 	//编辑界面显示
 	$(".editNote").click(function(){
@@ -187,16 +176,17 @@ $(function(){
 	 $("#face img").mouseout(function(e){
 		 $(this).removeClass("hover");
 	 });
-	 //选择头像
+	 //评论区选择头像
 	 $("#face img").click(function(){
 		 $("#face img").removeClass("current");
 		 $(this).addClass("current");
 	 });
-	 //计算输入框内的字数
+	 //评论区计算输入框内的字数
+	 var in_len
 	$("#conBox").keyup(function(){
 	     var length = 140;
 	     var content_len = $("#conBox").val().length;
-	     var in_len = length-content_len;
+	     in_len = length-content_len;
 	     
 	     if(in_len >=0){
 	    	$(".countTxt").html("还能输入");
@@ -213,27 +203,76 @@ $(function(){
 	     }	    
 	});
 	
-	//显示删除按钮
+	//评论区显示删除按钮
 	$("#commentList li").mouseover(function(e){
 		$(this).find(".del").css("display","block");
 	});
 	$("#commentList li").mouseout(function(e){
 		$(this).find(".del").css("display","none");
 	});
-	//保存评论
+	
+	//保存评论	
 	$("#sendBtn").click(function(){
+		//判断输入内容是否为空
+		if (!$("#conBox").val().length>0||!$("#conBox").val().trim().length>0) {
+			alert("评论不能为空");
+			return;
+		}
+		//判断输入评论内容是否过长
+		if (in_len<0) {
+			alert("评论内容过长");
+			return;
+		}		
+		//判断输入的名称是否为空或空格
+		var commentName=$("#userName").val();
+		if (!commentName.length>0||$.trim(commentName)=='') {
+			commentName = '匿名';
+		}
 		$.ajax({
-			url:'',
-			data:{},
+			url:'../comment/addComment.do',
+			data:{
+				commentName:commentName,
+				commentContent:$("#conBox").val(),
+				commentPic:$(".current").attr("src"),
+				nId:a
+			},
 			type:'post',
 			dataType:'json',
 			success:function(data){
-				
-			},
-			error:function(){
-				
+				if (data.result==true) {
+					alert("成功");
+					//添加成功后，加载局部页面
+					showComment(a);
+					$("#userName").val('');
+					$("#conBox").val('');
+					
+				}else{
+					alert("失败");
+				}
 			}
 		});
 	});
+	
+	//定义显示评论方法
+	function showComment(cnoteId){
+		$.ajax({
+    		url:'../comment/showCommentByNote.do',
+    		type:'post',
+    		data:{noteId:cnoteId},
+    		dataType:'json',
+    		success:function(data){
+    			for (var i = 0; i < data.result.length; i++) {
+    				$('#commentList').append("<li class='commentLi'><div class='userPic'><img src=" + data.result[i].commentPic + ">" +
+    						"</div><div class='content'><div class='userName'>" + data.result[i].commentName + "" +
+    								":</div><div class='msgInfo'>" + data.result[i].commentContent + 
+    								"</div><div class='times'><span>" + data.result[i].commentTime + 
+    								"</span><a class='del'>删除</a></span></div> </div></li>");
+    			}
+    		},
+    		error:function(){
+    			alert("读取失败");
+    		}
+    	});
+	}
 	
 }); 
