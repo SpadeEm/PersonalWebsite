@@ -17,10 +17,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="../css/blog.css">
 <link rel="stylesheet" type="text/css" href="../css/style.css">
+<link rel="stylesheet" type="text/css" href="../css/msg.css">
 <link rel="shortcut icon" href="../images/favicon.ico"/>
 <script type="text/javascript" src="../js/jquery-2.0.3.min.js"></script>
 <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="../js/note.js"></script>
 </head>
 <body>
 <!-- 导航栏 -->
@@ -131,7 +133,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				 		<div id="content" class="content" name="content"></div>
 					</div>
 				</div>
-				
+				<!-- 评论区 -->
+				<div id="msgBox">
+				 	<h4>给我留言：</h4>
+					<div>
+						选择你的头像
+				        <p id="face">
+			            	<img src="../img/face1.gif" class="current" /><img src="../img/face2.gif" /><img src="../img/face3.gif" /><img src="../img/face4.gif" /><img src="../img/face5.gif" /><img src="../img/face6.gif" /><img src="../img/face7.gif" /><img src="../img/face8.gif" />
+			            </p>
+			        </div>
+				    <div>
+				        <div class="input-group">
+				            <input id="userName" class="form-control f-text"  placeholder="输入你的邮箱" value="" />
+				            <!-- <input id="userEmail" class="form-control f-text"  placeholder="输入你的邮箱" value="" /> --> 
+				        </div>
+				        <div><textarea id="conBox" class="f-text"></textarea></div>
+				        <div class="tr">
+				            <p>
+				                <span class="countTxt">还能输入</span><strong class="maxNum">140</strong><span>个字</span>
+				                <!-- <input id="sendBtn" type="button" class="btn btn-default" value="发表" title="快捷键 Ctrl+Enter" /> -->
+				                <button id="sendBtn" class="btn btn-default">发表</button>
+				            </p>
+				        </div>
+				    </div>
+				    <div class="list">
+				        <h3><span>大家在说</span></h3>
+				        <ul id="commentList">
+				            <li>
+				    	        <div class="userPic"><img src="../img/face5.gif" /></div>
+				                <div class="content">
+				                    <div class="userName"><a href="javascript:;">永不上线</a>:</div>
+				                    <div class="msgInfo">仿腾讯微博效果，欢迎大家测试！</div>
+				                    <div class="times"><span>07月03日 20:19</span><a class="del" href="javascript:;">删除</a></div>
+				                </div>
+				            </li>
+				        </ul>
+				    </div>	
+				</div>			
 			</div>
 		</div>
 	</div>
@@ -208,171 +246,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 </div>
 <script type="text/javascript">
-    $(function(){
-        // Replace the <textarea id="editor1"> with a CKEditor
-        // instance, using default configuration.
-        //初始化CKeditor
-        CKEDITOR.replace( 'noteContent' );
-        CKEDITOR.replace( 'showNoteContent' );
-    	//初始化tooltip
-    	$('[data-toggle="tooltip"]').tooltip();
-    	$("#showNote").hide();
-    	//清空modal中的内容
-    	var a;
-    	var str
-    	//验证是否登录
-    	$.ajax({
-    		url:'../user/LoginCheck.do',
-    		dataType:'json',
-    		type:'post',
-    		success:function(data){
-    			if (data.result==false) {
-    				$(".editNote").hide();
-    				$(".editDelete").hide();
-    				$("#addNote").hide();
-    				$("#down").hide();
-    			}
-    		},
-    		error:function(){
-				 alert("验证登录失败");
-			 }
-    	});
-    	$("#addNote").click(function(){
-    		$("#title").val("");
-    		CKEDITOR.instances.noteContent.setData('');
-    		//添加笔记
-        	$("#noteSave").click(function(){
-        		if($("#title").val().length=0||!$("#title").val().trim()){
-        			alert("题目不能为空");
-        			return;
-        		}
-        		$.ajax({
-        			url:'../note/addNotes.do',
-        			data:{
-        				noteTitle:$("#title").val(),
-        				noteContent:CKEDITOR.instances.noteContent.getData()
-        			},
-        			dataType:'json',
-        			type:'post',
-        			success:function(data){
-        				if(data.result==true){
-        					$("#myModal").modal("hide");
-        					alert("保存成功");
-        					window.location.reload();
-        				}else{
-        					alert("保存失败");
-        				}
-        			}
-        		}); 
-        	});
-    	});
-    	
-    	//显示笔记内容
-    	$(".leftTitle").unbind('click').click(function(){
-    		//清空modal中的内容
-    		//$("#title").val("");
-    		//CKEDITOR.instances.noteContent.setData('');
-    		a =$(this).attr("href");
-    		$("#showNote").show();
-    		$("#showNoteContent").remove();
-    		$.ajax({
-    			url:'../note/getNoteById.do',
-    			data:{noteId:a},
-    			dataType:'json',
-    			type:'post',
-    			success:function(data){
-    				$("#noteHead").html(data.result.noteTitle);    				
-    				$("#createTime").html("创建于"+data.createTime);
-    				$("#content").html(data.result.noteContent);
-    				var noteTitle = $("#noteHead").text();
-    				str =$("#content").text();
-    	    		$("#down").attr('href','../note/downNote.do?noteTitle='+noteTitle+'&noteContent='+str+'');
-    			},
-    			error:function(){
-    			}
-    		})
-   		});
-    	//编辑界面显示
-    	$(".editNote").click(function(){
-	   		$.ajax({
-	   			url:'../note/getNoteById.do',
-	   			data:{noteId:a},
-	   			dataType:'json',
-	   			type:'post',
-	   			success:function(data){
-	   				$("#showTitle").val(data.result.noteTitle);
-	   				$("#noteId").html(data.result.noteId);
-	   				CKEDITOR.instances.showNoteContent.setData(data.result.noteContent);
-	   			}
-	   		});
-	   		
-		});
-    	//更新
-    	$("#noteUpdate").click(function(){
-    		if($("#showTitle").val().length=0||!$("#showTitle").val().trim()){
-    			alert("题目不能为空");
-    			return;
-    		}
-			$.ajax({
-   				url:'../note/editNoteById.do',
-    			data:{
-    				noteId:a,
-    				noteTitle:$("#showTitle").val(),
-    				noteContent:CKEDITOR.instances.showNoteContent.getData()
-    				},
-    			dataType:'json',
-    			type:'post',
-    			success:function(data){
-    				if(data.result==true){
-    					$("#editModal").modal("hide");
-    					window.location.reload();
-    				}else{
-    					alert("保存失败");
-    				}
-    			},
-    			error:function(){
-    				alert("保存失败");
-    			}
-    		});
-		});
-    	//删除
-    	$("#noteDelete").click(function(){
-    		$.ajax({
-    			url:'../note/deleteNoteById.do',
-    			data:{noteId:a},
-    			dataType:'json',
-    			type:'post',
-    			success:function(data){
-    				if(data.result==true){
-    					$("#deleteModal").modal("hide");
-    					window.location.reload();
-    				}else{
-    					alert("输出失败");
-    				}
-    			},
-    			error:function(){
-    				alert("删除失败");
-    			}
-    		});
-    	});
-    	//导出笔记文档
-    	/* $("#down").click(function(){
-    		
-    		$.ajax({
-    			url:'../note/downNote.do',
-    			data:{noteId:a,noteContent:str},
-    			type:'get',
-    			dataType:'json',
-    			success:function(data){
-    				
-    			},
-    			error:function(){
-    				alert("导出失败");
-    			}
-    		});
-    	}); */ 
-    	
-  	}); 
+
 </script>
 </body>
 </html>

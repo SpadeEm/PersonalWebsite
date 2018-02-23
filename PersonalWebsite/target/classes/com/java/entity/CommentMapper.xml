@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.dao.CommentDao">
+	<resultMap type="com.java.entity.Comment" id="commentResultMap">
+		<id property="commentId" column="CMT_ID"/>
+		<result property="commentName" column="CMT_NAME"/>
+		<result property="commentPic" column="CMT_PIC"/>
+		<result property="commentContent" column="CMT_CONTENT"/>
+		<result property="commentTime" column="CMT_TIME"/>
+		<result property="commentPic" column="CMT_PIC"/>
+		<association property="note" column="NOTE_ID" javaType="com.java.entity.Note">
+			<id property="noteId" column="NOTE_ID"/>
+			<result property="noteTitle" column="NOTE_TITLE"/>
+			<result property="noteContent" column="NOTE_CONTENT"/>
+			<result property="createTime" column="CREATE_TIME"/>
+		</association>
+	</resultMap>
+
+	<select id="getCommentByNoteId" parameterType="Integer" resultMap="commentResultMap">
+		select * from comment where NOTE_ID=#{noteId}
+	</select>
+	
+	<insert id="addComment" >
+		insert into comment(CMT_NAME,CMT_PIC,CMT_CONTENT,CMT_TIME,NOTE_ID)values(#{commentName},
+		#{commentPic},#{commentContent},#{createTime},#{noteId})
+	</insert>
+	
+	<delete id="deleteCommentById" parameterType="Integer">
+		delete from comment where CMT_ID = #{commentId}
+	</delete>
+
+</mapper>

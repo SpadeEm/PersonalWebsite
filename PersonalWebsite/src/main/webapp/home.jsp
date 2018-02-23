@@ -126,21 +126,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="noteTitle">创建邮件</h4>
+        <center><h4 class="modal-title" id="noteTitle">给我发一个便条</h4></center>
       </div>
       <div class="modal-body">
       	
        	<div class="input-group">
-		  <span class="input-group-addon">发件人邮箱</span>
-		  <input type="text" class="form-control" placeholder="" id="sendName">
+		  <span class="input-group-addon">邮箱</span>
+		  <input type="text" class="form-control" placeholder="输入您的邮箱" id="sendName">
 		</div>
 		<div class="input-group">
 		  <span class="input-group-addon">主题</span>
-		  <input type="text" class="form-control" placeholder="" id="sentTitle">
+		  <input type="text" class="form-control" placeholder="输入您的主题" id="sentTitle">
 		</div>
 		<div id ="editB">
 			<form>
-	            <textarea class="form-control" id="editBox" rows="10" cols="78"></textarea>
+	            <textarea class="form-control" id="editBox" rows="10" cols="78" placeholder="给我留言，我会尽快给您回复"></textarea>
 	        </form>
 	    </div>
       </div>

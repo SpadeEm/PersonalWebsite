@@ -1,4 +1,4 @@
-package com.java.test;
+package com.java.mappertest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
